@@ -189,6 +189,7 @@
 <script>
     var promoter_valid = false;
     var sponsor_valid = true;
+    var Swal = require('sweetalert2');
 
     $(function () {
         console.log('here');
@@ -227,13 +228,31 @@
                     package: package,
                     product: product,
                     full_name: full_name,
-                    password: password,
+                    mobile: mobile,
                     trans_password: trans_password
                 },
                 dataType: 'text',
                 success: function (data) {
-                    console.log(data);
-                    alert(data);
+                    // console.log(data);
+                    // alert(data);
+                    var res = data.split(",");
+                    if(res[0] == 'error'){
+                        Swal.fire({
+                            title: 'Error!',
+                            text: res[1],
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        })
+
+                    }
+                    else{
+                        Swal.fire({
+                            title: 'Promoter Inserted Successfully!',
+                            text: res[1],
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        })
+                    }
                 }
             });
         }
