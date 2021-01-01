@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Promotor;
 
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\SponsorTree;
+use App\User;
 use DB;
 
 class TreeController extends Controller
@@ -19,7 +19,7 @@ class TreeController extends Controller
         $node_1_user_id = 0;
         $node_1_bc = 0;
         $node_1_mobile = 0;
-        
+
         $node_11_user_id = 0;
         $node_11_bc = 0;
         $node_11_mobile = 0;
@@ -47,7 +47,7 @@ class TreeController extends Controller
         $node_1122_user_id = 0;
         $node_1122_bc = 0;
         $node_1122_mobile = 0;
-        
+
         $node_12_user_id = 0;
         $node_12_bc = 0;
         $node_12_mobile = 0;
@@ -91,18 +91,18 @@ class TreeController extends Controller
             //     ->where('bc', 1)
             //     ->first();
             //DB::connection()->enableQueryLog();
-            
+
             $root = DB::table('sponsor_tree as st')
                 ->join('users as u', 'u.id','=', 'st.user_id')
                 ->select('st.*','u.*')
                 ->where('st.user_id', $id)
                 ->where('st.bc', 1)
                 ->first();
-            
+
             //$queries = DB::getQueryLog();
 
             //dd($root);
-            
+
             $node_1_user_id = $root->user_id;
             $node_1_bc = $root->bc;
             $node_1_mobile = $root->mobile;
@@ -113,7 +113,7 @@ class TreeController extends Controller
             //check if root has left and right, node 1
             $tree_left = $root->left;
             $tree_right = $root->right;
-            
+
             if($tree_left == 0){
             }
             else{
@@ -133,7 +133,7 @@ class TreeController extends Controller
                 else{
                     //get left tree details
                     $root_left = $this->getTreeDetails($tree_11_left);
-                    
+
                     $node_111_user_id = $root_left->user_id;
                     $node_111_bc = $root_left->bc;
                     $node_111_mobile = $root_left->mobile;
@@ -150,7 +150,7 @@ class TreeController extends Controller
                         $node_1111_bc = $root_left->bc;
                         $node_1111_mobile = $root_left->mobile;
                     }
-                    
+
                     if($tree_111_right == 0){}
                     else{
                         //get left tree details
@@ -181,7 +181,7 @@ class TreeController extends Controller
                         $node_1121_bc = $root_left->bc;
                         $node_1121_mobile = $root_left->mobile;
                     }
-                    
+
                     if($tree_112_right == 0){}
                     else{
                         //get left tree details
@@ -210,7 +210,7 @@ class TreeController extends Controller
                 else{
                     //get left tree details
                     $root_left = $this->getTreeDetails($tree_12_left);
-                    
+
                     $node_121_user_id = $root_left->user_id;
                     $node_121_bc = $root_left->bc;
                     $node_121_mobile = $root_left->mobile;
@@ -227,7 +227,7 @@ class TreeController extends Controller
                         $node_1211_bc = $root_left->bc;
                         $node_1211_mobile = $root_left->mobile;
                     }
-                    
+
                     if($tree_121_right == 0){}
                     else{
                         //get left tree details
@@ -258,7 +258,7 @@ class TreeController extends Controller
                         $node_1221_bc = $root_left->bc;
                         $node_1221_mobile = $root_left->mobile;
                     }
-                    
+
                     if($tree_122_right == 0){}
                     else{
                         //get left tree details
@@ -279,7 +279,7 @@ class TreeController extends Controller
             'node_1_user_id' => $node_1_user_id,
             'node_1_bc' => $node_1_bc,
             'node_1_mobile' => $node_1_mobile,
-        
+
             'node_11_user_id' => $node_11_user_id,
             'node_11_bc' => $node_11_bc,
             'node_11_mobile' => $node_11_mobile,
@@ -306,7 +306,7 @@ class TreeController extends Controller
 
             'node_1122_user_id' => $node_1122_user_id,
             'node_1122_bc' => $node_1122_bc,
-            
+
             'node_12_user_id' => $node_12_user_id,
             'node_12_bc' => $node_12_bc,
             'node_12_mobile' => $node_12_mobile,
@@ -333,9 +333,9 @@ class TreeController extends Controller
 
             'node_1222_user_id' => $node_1222_user_id,
             'node_1222_bc' => $node_1222_bc,
-            'node_1222_mobile' => $node_1222_mobile 
+            'node_1222_mobile' => $node_1222_mobile
         ]);
-       
+
     }
 
     public function getTreeDetails($tree_id){
@@ -353,8 +353,9 @@ class TreeController extends Controller
 
     public function entry($id){
         //get sponsor tree id
+
         $auth_id = Auth::user()->id;
-        
+
         $root = SponsorTree::where('user_id', $auth_id)
                 ->where('bc', 1)
                 ->first();
@@ -363,6 +364,20 @@ class TreeController extends Controller
         $sponsor_id = $root->id;
 
         return view('promotor.promoterEntry', ['id' => $id, 'sponsor_id' => $sponsor_id]);
+    }
+
+    public function newentry(){
+        //get sponsor tree id
+        $auth_id = Auth::user()->id;
+        $user = User::where('id', $auth_id)
+                ->first();
+
+        $root = SponsorTree::where('user_id', $auth_id)
+            ->where('bc', 1)
+            ->first();
+        //dd($root);
+
+        return view('promotor.newentry.promoterEntry', ['root' => $root, 'user' => $user]);
     }
 
     public function savePromoter(){
@@ -384,7 +399,7 @@ class TreeController extends Controller
             $id = $users->id;
             //claculate bc
             $sp_users = DB::table('sponsor_tree')->where('user_id', $id)->count();
-            
+
             if($sp_users < 1){
                 $bc = 1;
             }
@@ -399,15 +414,15 @@ class TreeController extends Controller
             $id = DB::table('users')->insertGetId(
                 [
                     'email' => $email,
-                    'name' => $full_name, 
-                    'password' => $password,  
+                    'name' => $full_name,
+                    'password' => $password,
                     'role' => 'promoter',
                     'mobile' => $mobile
                 ]
             );
             $bc = 1;
         }
-        
+
         //create package list
 
         //placement
@@ -415,8 +430,8 @@ class TreeController extends Controller
         $sponsor_tree_id = DB::table('sponsor_tree')->insertGetId(
             [
                 'user_id' => $id,
-                'parent' => $placement, 
-                'left' => 0,  
+                'parent' => $placement,
+                'left' => 0,
                 'right' => 0,
                 'sponsor_id' => $sponsor_id,
                 'bc' => $bc
@@ -440,5 +455,50 @@ class TreeController extends Controller
         return 'Created Successfully';
     }
 
-    
+    //promoter checkplacement
+    public function checkplacement(Request $request){
+        $placement = $request->input('placement');
+
+        //check if user exist and has input in sponsor_tree
+        $user = User::where('mobile', $placement)
+                ->first();
+
+        if($user) {
+            return 'true';
+        }
+        else {
+            return 'false';
+        }
+    }
+
+    public function checkplacementwithbc(Request $request){
+        $placement = $request->input('placement');
+        $bc = $request->input('bc');
+
+        //check if user exist and has input in sponsor_tree
+        $user = User::where('mobile', $placement)
+                ->first();
+
+        $root = SponsorTree::where('user_id', $user->id)
+        ->where('bc', $bc)
+        ->first();
+        //dd($root);exit();
+        if($root) {
+            return 'true';
+        }
+        else {
+            return 'false';
+        }
+    }
+
+    public function savenewpromoter(Request $request){
+        //check validation
+        //save in user
+        //save in sponsor tree
+        //update sponsor details
+        //update package
+
+    }
+
+
 }

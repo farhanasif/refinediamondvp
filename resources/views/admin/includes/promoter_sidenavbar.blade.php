@@ -123,6 +123,12 @@
                       <p>Board Tree</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>New Entry</p>
+                    </a>
+                  </li>
 
                 </ul>
               </li>

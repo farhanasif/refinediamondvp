@@ -11,7 +11,7 @@
 <!-- ChartJS -->
 <script src="{{asset('assets/admin/plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
-<script src="{{asset('assets/admin/plugins/sparklines/sparkline.js')}}"></script>
+<!-- <script src="{{asset('assets/admin/plugins/sparklines/sparkline.js')}}"></script> -->
 <!-- JQVMap -->
 <script src="{{asset('assets/admin/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
 <script src="{{asset('assets/admin/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
