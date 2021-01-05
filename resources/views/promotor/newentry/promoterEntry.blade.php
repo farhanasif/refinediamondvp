@@ -68,7 +68,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Placement Mobile</label>
-                                        <input type="text" class="form-control" id="placement" value="" onchange="checkPlacement()">
+                                        <input type="text" class="form-control" id="placement" value="" onchange="checkPlacementWithBC()">
                                         <div class="form-text" id="placement_help"></div>
                                     </div>
                                 </div>
@@ -94,8 +94,8 @@
                                 <div class="form-group">
                                     <label>Package</label>
                                     <select class="form-control" id="package">
-                                        <option value="FREE">White</option>
-                                        <option value="GOLD">Gold</option>
+                                        <option value="Package 1">Package 1</option>
+                                        <option value="Package 2">Package 2</option>
                                         <option value="100">100 (Free User)</option>
                                         <option value="2000">2000 (Hope Digital City)</option>
                                     </select>
