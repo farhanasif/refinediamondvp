@@ -27,6 +27,66 @@
     border-top-color: gold;
     border-top-width: 2px;
   }
+
+    .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    }
+
+    .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: transparent;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    alignItems: 'center';
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+    visibility: visible;
+    }
+
+    table, th, td {
+    border: 1px solid #A2A1A2;
+    padding-left: 2px;
+    background-color: #dae5e5;
+    }
+
+    .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    }
+
+    .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: transparent;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    alignItems: 'center';
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+    visibility: visible;
+    }
+
+    table, th, td {
+    border: 1px solid #A2A1A2;
+    padding-left: 2px;
+    background-color: #dae5e5;
+    }
 </style>
 @if(Session::has('success') || Session::has('failed') || Session::has('error'))
 <section class="content">
@@ -75,9 +135,6 @@
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
             </div>
         </div>
         <div class="card-body">
@@ -90,11 +147,12 @@
                                   @if($node_1_user_id > 0)
                                     <a href="{{ url('/promotor/tree/'.$node_1_user_id) }}">
                                     <img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
-                    style="opacity: .8"></a>
+                    style="opacity: .8" onmouseover="getTooltip({{$node_1_user_id}},{{$node_1_bc}})"></a>
                                     <br/>
 
-                                        <b>{{ $node_1_mobile }}</b><br/>
-                                        <b>BC {{ $node_1_bc }}</b>
+                                    <b>{{ $node_1_mobile }}</b>
+                                    <br/>
+                                    <b>BC {{ $node_1_bc }}</b>
                                   @else
                                       +
                                   @endif
@@ -283,6 +341,10 @@
 @section('custom_js')
 <script>
     console.log('here');
+    function getTooltip(id,bc){
+        console.log('got id and bc ', id, bc);
+        //get details of the account
 
+    }
 </script>
 @endsection
