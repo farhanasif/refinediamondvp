@@ -14,8 +14,9 @@ use DB;
 class TreeController extends Controller
 {
     //promoter tree
-    public function index($id = 1){
+    public function index($id = 1, $bc = 1){
         $auth_id = Auth::user()->id;
+
         $node_1_user_id = 0;
         $node_1_bc = 0;
         $node_1_mobile = 0;
@@ -96,7 +97,7 @@ class TreeController extends Controller
                 ->join('users as u', 'u.id','=', 'st.user_id')
                 ->select('st.*','u.*')
                 ->where('st.user_id', $id)
-                ->where('st.bc', 1)
+                ->where('st.bc', $bc)
                 ->first();
 
             //$queries = DB::getQueryLog();
@@ -186,6 +187,7 @@ class TreeController extends Controller
                     else{
                         //get left tree details
                         $root_left = $this->getTreeDetails($tree_112_right);
+                        //dd($root_left);exit();
                         $node_1122_user_id = $root_left->user_id;
                         $node_1122_bc = $root_left->bc;
                         $node_1122_mobile = $root_left->mobile;
@@ -275,6 +277,70 @@ class TreeController extends Controller
             //return view('promotor.tree');
         }
 
+        $response = [
+            'node_1_user_id' => $node_1_user_id,
+            'node_1_bc' => $node_1_bc,
+            'node_1_mobile' => $node_1_mobile,
+
+            'node_11_user_id' => $node_11_user_id,
+            'node_11_bc' => $node_11_bc,
+            'node_11_mobile' => $node_11_mobile,
+
+            'node_111_user_id' => $node_111_user_id,
+            'node_111_bc' => $node_111_bc,
+            'node_111_mobile' => $node_111_mobile,
+
+            'node_112_user_id' => $node_112_user_id,
+            'node_112_bc' => $node_112_bc,
+            'node_112_mobile' => $node_112_mobile,
+
+            'node_1111_user_id' => $node_1111_user_id,
+            'node_1111_bc' => $node_1111_bc,
+            'node_1111_mobile' => $node_1111_mobile,
+
+            'node_1112_user_id' => $node_1112_user_id,
+            'node_1112_bc' => $node_1112_bc,
+            'node_1112_mobile' => $node_1112_mobile,
+
+            'node_1121_user_id' => $node_1121_user_id,
+            'node_1121_bc' => $node_1121_bc,
+            'node_1121_mobile' => $node_1121_mobile,
+
+            'node_1122_user_id' => $node_1122_user_id,
+            'node_1122_bc' => $node_1122_bc,
+            'node_1122_mobile' => $node_1122_mobile,
+
+            'node_12_user_id' => $node_12_user_id,
+            'node_12_bc' => $node_12_bc,
+            'node_12_mobile' => $node_12_mobile,
+
+            'node_121_user_id' => $node_121_user_id,
+            'node_121_bc' => $node_121_bc,
+            'node_121_mobile' => $node_121_mobile,
+
+            'node_122_user_id' => $node_122_user_id,
+            'node_122_bc' => $node_122_bc,
+            'node_122_mobile' => $node_122_mobile,
+
+            'node_1211_user_id' => $node_1211_user_id,
+            'node_1211_bc' => $node_1211_bc,
+            'node_1211_mobile' => $node_1211_mobile,
+
+            'node_1212_user_id' => $node_1212_user_id,
+            'node_1212_bc' => $node_1212_bc,
+            'node_1212_mobile' => $node_1212_mobile,
+
+            'node_1221_user_id' => $node_1221_user_id,
+            'node_1221_bc' => $node_1221_bc,
+            'node_1221_mobile' => $node_1221_mobile,
+
+            'node_1222_user_id' => $node_1222_user_id,
+            'node_1222_bc' => $node_1222_bc,
+            'node_1222_mobile' => $node_1222_mobile
+        ];
+
+        //dd($response);exit();
+
         return view('promotor.tree', [
             'node_1_user_id' => $node_1_user_id,
             'node_1_bc' => $node_1_bc,
@@ -306,6 +372,7 @@ class TreeController extends Controller
 
             'node_1122_user_id' => $node_1122_user_id,
             'node_1122_bc' => $node_1122_bc,
+            'node_1122_mobile' => $node_1122_mobile,
 
             'node_12_user_id' => $node_12_user_id,
             'node_12_bc' => $node_12_bc,
@@ -673,6 +740,35 @@ class TreeController extends Controller
             else{
                 return 'error, sponsor is not valid';
             }
+        }
+    }
+
+    public function getPromotorDetails(Request $request){
+        $placement = $request->input('mobile');
+        $bc = $request->input('bc');
+
+        //check if user exist and has input in sponsor_tree
+        $user = User::where('mobile', $placement)
+                ->first();
+
+        if($user){
+            $root = SponsorTree::where('user_id', $user->id)
+            ->where('bc', $bc)
+            ->first();
+
+            if($root) {
+                return response()->json($root);
+            }
+            else {
+                return response()->json([
+                    'data' => 'error'
+                ]);
+            }
+        }
+        else {
+            return response()->json([
+                'data' => 'error'
+            ]);
         }
     }
 }
