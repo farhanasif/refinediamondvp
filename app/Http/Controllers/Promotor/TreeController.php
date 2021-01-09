@@ -82,7 +82,7 @@ class TreeController extends Controller
         }
 
         //echo $id; exit();
-        
+
 
         if($id){
             //return $id;
@@ -600,138 +600,166 @@ class TreeController extends Controller
                     else{
                         //check if placement is under parent
                         //check if placement is uder its bc 1
+                        //check sponsor bc
+                        $sp_query = "select * from sponsor_tree where user_id =".$sponsor_id." and bc=".$sponsor_bc." limit 1";
+                        $sp_res = DB::select($sp_query);
+                        if($sp_res){
+                            //we need to enter as per bc id of each mobile
+                            $sp_bc_id = $sp_res[0]->id;
+                            $topline = DB::select("
+                            SELECT T2.id, T2.parent, T2.user_id, T2.bc, u.mobile
+                                FROM (
+                                    SELECT
+                                        @r AS _id,
+                                        (SELECT @r := parent FROM sponsor_tree WHERE id = _id) AS parent,
+                                        @l := @l + 1 AS lvl
+                                    FROM
+                                        (SELECT @r := ".$place_check[0]->id.", @l := 0) vars,
+                                        sponsor_tree h
+                                    WHERE @r <> 0) T1
+                                JOIN sponsor_tree T2
+                                ON T1._id = T2.id
+                                join users u
+                                on u.id = T2.user_id
+                                ORDER BY T1.lvl desc
+                            ");
 
-                        $topline = DB::select("
-                        SELECT T2.id, T2.parent, T2.user_id, T2.bc, u.mobile
-                            FROM (
-                                SELECT
-                                    @r AS _id,
-                                    (SELECT @r := parent FROM sponsor_tree WHERE id = _id) AS parent,
-                                    @l := @l + 1 AS lvl
-                                FROM
-                                    (SELECT @r := ".$place_check[0]->id.", @l := 0) vars,
-                                    sponsor_tree h
-                                WHERE @r <> 0) T1
-                            JOIN sponsor_tree T2
-                            ON T1._id = T2.id
-                            join users u
-                            on u.id = T2.user_id
-                            ORDER BY T1.lvl desc
-                        ");
-
-                        if($topline){
-                            $length = count($topline);
-                            $sp_valid = 0; //invalid
-                            $own_bc = 0; //invalid
-                            $new = 1; //yes
-                            for($i = 0; $i < $length; $i++){
-                                //check if sponsor matched or not
-                                if($topline[$i]->mobile == $sponsor_mobile){
-                                    $sp_valid = 1; //valid
-                                }
-
-                                //check if own bc 1 matched ot not
-                                if($topline[$i]->mobile == $mobile){
-                                    $new = 0;
-                                    //check if own bc 1 or not
-                                    if($topline[$i]->bc == 1){
-                                        $own_bc = 1; //valid
+                            if($topline){
+                                $length = count($topline);
+                                $sp_valid = 0; //invalid
+                                $own_bc = 0; //invalid
+                                $new = 1; //yes
+                                for($i = 0; $i < $length; $i++){
+                                    //check if sponsor matched or not
+                                    if($topline[$i]->mobile == $sponsor_mobile){
+                                        $sp_valid = 1; //valid
                                     }
 
-                                }
-                            }
+                                    //check if own bc 1 matched ot not
+                                    if($topline[$i]->mobile == $mobile){
+                                        $new = 0;
+                                        //check if own bc 1 or not
+                                        if($topline[$i]->bc == 1){
+                                            $own_bc = 1; //valid
+                                        }
 
-                            // /echo $sp_valid.'-'.$own_bc.'-'.$new; exit();
-                            //if not new check validity
-                            $validity = 0;
-                            if($new == 0){
-                                if($sp_valid == 1 && $own_bc == 1){
+                                    }
                                 }
-                                else{
-                                    //invalid
-                                    return 'error,Sponsor and Placement is invalid';
-                                }
-                            }
-                            else{
-                                if($sp_valid == 0){
-                                    $validity = 1;
-                                }
-                            }
 
-                            if($validity == 0){
-                                //save in user
-                                //check if mobile already exists, then another cb
-                                $id = 0;
-                                $users = DB::table('users')->where('mobile', $mobile)->first();
-                                if($users){
-                                    $id = $users->id;
-                                    //claculate bc
-                                    $sp_users = DB::table('sponsor_tree')->where('user_id', $id)->count();
-
-                                    if($sp_users < 1){
-                                        $bc = 1;
+                                // /echo $sp_valid.'-'.$own_bc.'-'.$new; exit();
+                                //if not new check validity
+                                $validity = 0;
+                                if($new == 0){
+                                    if($sp_valid == 1 && $own_bc == 1){
                                     }
                                     else{
-                                        $bc = $sp_users + 1;
+                                        //invalid
+                                        return 'error,Sponsor and Placement is invalid';
                                     }
                                 }
                                 else{
-                                    //create user
-                                    $password = '123456';
-                                    $password = Hash::make($password);
-                                    $email = "mail_".$mobile."_".rand(1000,9999)."@gmail.com";
-                                    $id = DB::table('users')->insertGetId(
+                                    if($sp_valid == 0){
+                                        $validity = 1;
+                                    }
+                                }
+
+                                if($validity == 0){
+                                    //save in user
+                                    //check if mobile already exists, then another cb
+                                    $id = 0;
+                                    $users = DB::table('users')->where('mobile', $mobile)->first();
+                                    if($users){
+                                        $id = $users->id;
+                                        //claculate bc
+                                        $sp_users = DB::table('sponsor_tree')->where('user_id', $id)->count();
+
+                                        if($sp_users < 1){
+                                            $bc = 1;
+                                        }
+                                        else{
+                                            $is_bc_valid = 0;
+                                            for($i = 0; $i < $length; $i++){
+                                                //check if user has bc then we need to chcek again topline
+                                                if($topline[$i]->mobile == $mobile){
+                                                    $is_bc_valid = 1;
+                                                }
+                                            }
+                                            //if own bc is valid
+                                            if($is_bc_valid == 1){
+                                                $bc = $sp_users + 1;
+                                            }
+                                            else{
+                                                return "error,Placement BC is invalid";
+                                            }
+
+                                        }
+                                    }
+                                    else{
+                                        //create user
+                                        $password = '123456';
+                                        $password = Hash::make($password);
+                                        $email = "mail_".$mobile."_".rand(1000,9999)."@gmail.com";
+                                        $id = DB::table('users')->insertGetId(
+                                            [
+                                                'email' => $email,
+                                                'name' => $full_name,
+                                                'password' => $password,
+                                                'role' => 'promoter',
+                                                'mobile' => $mobile,
+                                                'transaction_pass' => '1234',
+                                                'created_at' => Date('Y-m-d h:i:s'),
+                                                'updated_at' => Date('Y-m-d h:i:s')
+                                            ]
+                                        );
+                                        $bc = 1;
+                                    }
+                                    //save in sponsor tree
+                                    //placement
+                                    //save sponsor tree
+                                    $sponsor_tree_id = DB::table('sponsor_tree')->insertGetId(
                                         [
-                                            'email' => $email,
-                                            'name' => $full_name,
-                                            'password' => $password,
-                                            'role' => 'promoter',
-                                            'mobile' => $mobile
+                                            'user_id' => $id,
+                                            'parent' => $place_check[0]->id,
+                                            'left' => 0,
+                                            'right' => 0,
+                                            'sponsor_id' => $sp_bc_id,
+                                            'bc' => $bc,
+                                            'package' => $package
                                         ]
                                     );
-                                    $bc = 1;
-                                }
-                                //save in sponsor tree
-                                //placement
-                                //save sponsor tree
-                                $sponsor_tree_id = DB::table('sponsor_tree')->insertGetId(
-                                    [
-                                        'user_id' => $id,
-                                        'parent' => $place_check[0]->id,
-                                        'left' => 0,
-                                        'right' => 0,
-                                        'sponsor_id' => $sponsor_id,
-                                        'bc' => $bc,
-                                        'package' => $package
-                                    ]
-                                );
 
-                                echo $sponsor_tree_id;
+                                    //echo $sponsor_tree_id;
 
-                                if($position == 'L'){
-                                    DB::table('sponsor_tree')
-                                    ->where('id', $place_check[0]->id)
-                                    ->update(['left' => $sponsor_tree_id]);
+                                    if($position == 'L'){
+                                        DB::table('sponsor_tree')
+                                        ->where('id', $place_check[0]->id)
+                                        ->update(['left' => $sponsor_tree_id]);
+                                    }
+                                    else{
+                                        DB::table('sponsor_tree')
+                                        ->where('id', $place_check[0]->id)
+                                        ->update(['right' => $sponsor_tree_id]);
+                                    }
+
+
+
+
+                                    return 'success,Created Successfully';
+                                    //update package
                                 }
                                 else{
-                                    DB::table('sponsor_tree')
-                                    ->where('id', $place_check[0]->id)
-                                    ->update(['right' => $sponsor_tree_id]);
+                                    return 'error,an error occured';
                                 }
-
-
-
-
-                                return 'success,Created Successfully';
-                                //update package
                             }
                             else{
                                 return 'error,an error occured';
                             }
                         }
                         else{
-                            return 'error,an error occured';
+                            return "error,Sponsor mobile and BC not matching";
                         }
+
+
 
                     }
 
@@ -776,5 +804,17 @@ class TreeController extends Controller
                 'data' => 'error'
             ]);
         }
+    }
+
+    public function getSponsorTree(){
+        $query = "select st.id as placement_id, st.user_id,st.bc, u.name, u.mobile,
+        st.parent as parent_placement_id, st.left as left_placement_id, st.right as right_placement_id,
+        st.sponsor_id as sponsor_placement_id
+        from sponsor_tree as st
+        inner join users as u
+        on u.id = st.user_id";
+
+        $results = DB::select($query);
+        return view('promotor.newentry.view',compact('results'));
     }
 }

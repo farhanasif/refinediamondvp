@@ -324,7 +324,7 @@
                                                       <a href="{{ url('/promotor/tree/'.$node_1222_user_id.'/'.$node_1222_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
                     <b>{{ $node_122_mobile }}</b><br/>
-                                              <b>BC {{ $node_122_bc }}</b>
+                                              <b>BC {{ $node_1222_bc }}</b>
                                                       @else
                                                           +
                                                       @endif
@@ -372,7 +372,7 @@
 
         $.ajax({
             type: 'POST',
-            url: 'http://localhost/refinediamond/public/index.php/promotor/getPromotorDetails',
+            url: 'http://localhost/refinediamondvp/public/index.php/promotor/getPromotorDetails',
             data: {
                 mobile: mobile,
                 bc: bc,
@@ -381,7 +381,7 @@
             success: function (data) {
                 console.log(data);
                 if(data.user_id){
-                    window.location.href = "http://localhost/refinediamond/public/index.php/promotor/tree/"+data.user_id+"/"+bc;
+                    window.location.href = "http://localhost/refinediamondvp/public/index.php/promotor/tree/"+data.user_id+"/"+bc;
                 }
                 else{
                     alert('user not found');

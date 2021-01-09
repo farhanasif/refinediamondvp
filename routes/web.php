@@ -80,7 +80,7 @@ Route::post('/promotor/checkplacement','Promotor\TreeController@checkplacement')
 Route::post('/promotor/checkplacementwithbc','Promotor\TreeController@checkplacementwithbc')->name('promotor.checkplacementwithbc');
 Route::post('/promotor/savenewpromoter','Promotor\TreeController@savenewpromoter')->name('promotor.savenewpromoter');
 Route::post('/promotor/getPromotorDetails','Promotor\TreeController@getPromotorDetails')->name('promotor.getPromotorDetails');
-
+Route::get('/promotor/view','Promotor\TreeController@getSponsorTree')->name('promotor.view');
 
 
 
