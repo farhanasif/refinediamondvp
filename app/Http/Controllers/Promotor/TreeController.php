@@ -689,7 +689,7 @@ class TreeController extends Controller
                                                 $bc = $sp_users + 1;
                                             }
                                             else{
-                                                return "error,Placement BC is invalid";
+                                                return "error,Placement BC is in Cross Line";
                                             }
 
                                         }
@@ -809,7 +809,7 @@ class TreeController extends Controller
     public function getSponsorTree(){
         $query = "select st.id as placement_id, st.user_id,st.bc, u.name, u.mobile,
         st.parent as parent_placement_id, st.left as left_placement_id, st.right as right_placement_id,
-        st.sponsor_id as sponsor_placement_id
+        st.sponsor_id as sponsor_placement_id, st.package
         from sponsor_tree as st
         inner join users as u
         on u.id = st.user_id";

@@ -158,13 +158,13 @@
                                   @if($node_1_user_id > 0)
                                     <a href="{{ url('/promotor/tree/'.$node_1_user_id.'/'.$node_1_bc) }}">
                                         <img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
-                        style="opacity: .8" onmouseover="getTooltip({{$node_1_user_id}},{{$node_1_bc}})">
+                        style="opacity: .8">
                                     </a>
                                     <br/>
 
                                     <b>{{ $node_1_mobile }}</b>
                                     <br/>
-                                    <b>BC {{ $node_1_bc }}</b>
+                                    <b rel="tooltip" data-html="true" id="{{$node_1_user_id}}_{{$node_1_bc}}" onmouseover="getTooltip({{$node_1_user_id}},{{$node_1_bc}})">BC {{ $node_1_bc }}</b>
                                   @else
                                       +
                                   @endif
@@ -355,6 +355,13 @@
     console.log('here');
     function getTooltip(id,bc){
         console.log('got id and bc ', id, bc);
+        //$("#4_1").attr("title",'<b style="color: red;">500</b>');
+
+        $("#4_1").attr("title",'hello<br/>world')
+        $("[rel=tooltip]").tooltip({html:true});
+        // $('.tooltip-demo.well').tooltip({
+        //     selector: "a[rel=tooltip]"
+        // })
         //get details of the account
 
     }

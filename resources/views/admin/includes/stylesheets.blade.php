@@ -36,3 +36,20 @@
   <!-- <link rel="stylesheet" href="{{asset('assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}"> -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Noto+Sans+JP">
+  <style>
+      /* @font-face {
+        font-family: 'UnileverShilling';
+        src: local('UnileverShilling'), url({{asset('assets//fonts/UnileverShilling.ttf')}}) format('truetype');
+      } */
+
+
+      body {
+        margin: 0;
+        font-family: 'Noto Sans Jp', sans-serif !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: transparent !important;
+      }
+  </style>

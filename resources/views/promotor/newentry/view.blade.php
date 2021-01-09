@@ -1,5 +1,4 @@
 @extends('admin.admin_master')
-
 @section('dashobard_title', 'Promoter Sponsor Tree View')
 @section('admin_content')
 @if(Session::has('success') || Session::has('failed') || Session::has('error'))
@@ -27,7 +26,9 @@
     </div>
 </section>
 @endif
-
+<style>
+    th.dt-center, td.dt-center { text-align: center !important; }
+</style>
 <!-- Main content -->
 <section class="content mt-3">
     <!-- Default box -->
@@ -52,27 +53,37 @@
                         <table class="table table-sm table-bordered table-striped dataTable dtr-inline" id="example1" role="grid" aria-describedby="example1_info">
                             <thead>
                                 <tr>
-                                    <th style="width: 12px">Placement Id</th>
+                                    <th>Placement Id</th>
                                     <th>Name</th>
                                     <th>Mobile</th>
                                     <th>BC</th>
-                                    <th>parent placement Id</th>
-                                    <th>Left Placement Id</th>
-                                    <th>Right Placement Id</th>
-                                    <th>Sponsor Placement Id</th>
+                                    <th>Parent</th>
+                                    <th>Left</th>
+                                    <th>Right</th>
+                                    <th>Sponsor</th>
+                                    <th>Package</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($results as $result)
                                     <tr>
-                                        <td>{{$result->placement_id}}</td>
-                                        <td>{{$result->name}}</td>
+                                        <td class="table-active"><b>{{$result->placement_id}}</b></td>
+                                        <td><b>{{$result->name}}</b></td>
                                         <td>{{$result->mobile}}</td>
                                         <td>{{$result->bc}}</td>
                                         <td>{{$result->parent_placement_id}}</td>
-                                        <td>{{$result->left_placement_id}}</td>
-                                        <td>{{$result->right_placement_id}}</td>
+                                        <td class="table-primary">{{$result->left_placement_id}}</td>
+                                        <td class="table-warning">{{$result->right_placement_id}}</td>
                                         <td>{{$result->sponsor_placement_id}}</td>
+                                        <td>
+                                            @if($result->package=='100')
+                                                <button class="btn btn-success btn-xs">Free User</button>
+                                            @elseif($result->package =='2000')
+                                                <button class="btn btn-warning btn-xs">Hope Digital City</button>
+                                            @else
+                                                <button class="btn btn-info btn-xs">{{$result->package}}</button>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -99,7 +110,10 @@ $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-      "pageLength": 25
+      "pageLength": 25,
+      "columnDefs": [
+        {"className": "dt-center", "targets": "_all"}
+      ]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 });
 </script>
