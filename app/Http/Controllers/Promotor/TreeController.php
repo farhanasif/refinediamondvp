@@ -14,9 +14,9 @@ use DB;
 class TreeController extends Controller
 {
     //promoter tree
-    public function index($id = 1, $bc = 1){
+    public function index($id = 0, $bc = 1){
         $auth_id = Auth::user()->id;
-
+        //dd($auth_id); exit();
         $node_1_user_id = 0;
         $node_1_bc = 0;
         $node_1_mobile = 0;
@@ -77,9 +77,12 @@ class TreeController extends Controller
         $node_1222_bc = 0;
         $node_1222_mobile = 0;
 
-        if(!isset($id) || $id == ''){
-            $id =1;
+        if(!isset($id) || $id < 1){
+            $id = $auth_id;
         }
+
+        //echo $id; exit();
+        
 
         if($id){
             //return $id;
@@ -102,7 +105,7 @@ class TreeController extends Controller
 
             //$queries = DB::getQueryLog();
 
-            //dd($root);
+            //dd($queries); exit();
 
             $node_1_user_id = $root->user_id;
             $node_1_bc = $root->bc;
@@ -177,7 +180,7 @@ class TreeController extends Controller
                     if($tree_112_left == 0){}
                     else{
                         //get left tree details
-                        $root_left = $this->getTreeDetails($tree_111_left);
+                        $root_left = $this->getTreeDetails($tree_112_left);
                         $node_1121_user_id = $root_left->user_id;
                         $node_1121_bc = $root_left->bc;
                         $node_1121_mobile = $root_left->mobile;
@@ -438,11 +441,11 @@ class TreeController extends Controller
         $auth_id = Auth::user()->id;
         $user = User::where('id', $auth_id)
                 ->first();
-
+        //dd($user);exit();
         $root = SponsorTree::where('user_id', $auth_id)
             ->where('bc', 1)
             ->first();
-        //dd($root);
+        //dd($root); exit();
 
         return view('promotor.newentry.promoterEntry', ['root' => $root, 'user' => $user]);
     }
@@ -457,6 +460,7 @@ class TreeController extends Controller
         $mobile = $_GET['mobile'];
         $password = $_GET['password'];
         $trans_password = $_GET['trans_password'];
+        $trans_password = '1234';
         $bc = 0;
 
         //check if mobile already exists, then another cb
@@ -477,14 +481,15 @@ class TreeController extends Controller
         else{
             //create user
             $password = Hash::make($password);
-            $email = "mail1_".rand(1000,1000)."@gmail.com";
+            $email = "mail1_".$mobile."@gmail.com";
             $id = DB::table('users')->insertGetId(
                 [
                     'email' => $email,
                     'name' => $full_name,
                     'password' => $password,
                     'role' => 'promoter',
-                    'mobile' => $mobile
+                    'mobile' => $mobile,
+                    'transaction_pass' => $trans_password
                 ]
             );
             $bc = 1;
@@ -672,8 +677,9 @@ class TreeController extends Controller
                                 }
                                 else{
                                     //create user
+                                    $password = '123456';
                                     $password = Hash::make($password);
-                                    $email = "mail1_".rand(1000,1000)."@gmail.com";
+                                    $email = "mail_".$mobile."_".rand(1000,9999)."@gmail.com";
                                     $id = DB::table('users')->insertGetId(
                                         [
                                             'email' => $email,
