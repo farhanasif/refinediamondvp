@@ -817,4 +817,72 @@ class TreeController extends Controller
         $results = DB::select($query);
         return view('promotor.newentry.view',compact('results'));
     }
+
+    public function meeting(){
+        return view('promotor.newentry.meeting');
+    }
+
+    public function getbcdata(Request $request){
+        $id = $request->input('id');
+        $bc = $request->input('bc');
+
+        $query = "select st.id,DATE_FORMAT(st.created_at, '%m %b %Y') as joining_date, u.name, u.mobile, st.bc, st.sponsor_id , st.package
+        from sponsor_tree st
+        inner join users u
+        on u.id = st.user_id
+        and st.user_id = ".$id."
+        and st.bc = ".$bc;
+
+        $root = DB::select($query);
+
+        if($root){
+            $mobile = $root[0]->mobile;
+            $user_bc = $root[0]->bc;
+            $joining_date = $root[0]->joining_date;
+            $name = $root[0]->name;
+            $placement = $root[0]->id;
+            $package = $root[0]->package == '2000' ? 'Hope digital' : 'Free';
+            $sponsor_id = $root[0]->sponsor_id;
+
+            //get sponsor details
+            $query_get_sponsor = "select st.id,DATE_FORMAT(st.created_at, '%m %b %Y') as joining_date, u.name, u.mobile, st.bc, st.sponsor_id , st.package
+                    from sponsor_tree st
+                    inner join users u
+                    on u.id = st.user_id
+                    and st.id = ".$sponsor_id;
+
+            $sp = DB::select($query_get_sponsor);
+            $sponsor_detail = $sp[0]->name. ' ('.$sp[0]->mobile.') BC:'.$sp[0]->bc;
+
+            //get left right
+            //dd($placement);exit();
+            $sp_get_left_right = "call sp_get_left_and_right_child_node_count(".$placement.")";
+            $child = DB::select($sp_get_left_right);
+            //dd($child);exit();
+            $left = $child[0]->left_total;
+            $right = $child[0]->right_total;
+
+            return response()->json([
+                'status' => 'success',
+                'mobile' => $mobile,
+                'user_bc' => $user_bc,
+                'joining_date' => $joining_date,
+                'name' => $name,
+                'placement' => $placement,
+                'package' => $package,
+                'sponsor_detail' => $sponsor_detail,
+                'left' => $left,
+                'right' => $right
+            ]);
+
+
+        }
+        else{
+            return response()->json([
+                'status' => 'error'
+            ]);
+        }
+
+
+    }
 }

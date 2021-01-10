@@ -81,8 +81,8 @@ Route::post('/promotor/checkplacementwithbc','Promotor\TreeController@checkplace
 Route::post('/promotor/savenewpromoter','Promotor\TreeController@savenewpromoter')->name('promotor.savenewpromoter');
 Route::post('/promotor/getPromotorDetails','Promotor\TreeController@getPromotorDetails')->name('promotor.getPromotorDetails');
 Route::get('/promotor/view','Promotor\TreeController@getSponsorTree')->name('promotor.view');
-
-
+Route::get('/promotor/meeting','Promotor\TreeController@meeting')->name('promotor.meeting');
+Route::post('/promotor/getbcdata', 'Promotor\TreeController@getbcdata')->name('promotor.getbcdata');
 
 
 
