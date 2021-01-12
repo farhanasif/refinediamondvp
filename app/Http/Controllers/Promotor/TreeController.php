@@ -13,7 +13,7 @@ use DB;
 
 class TreeController extends Controller
 {
-    //promoter tree
+    //PROMOTER TREE PAGE
     public function index($id = 0, $bc = 1){
         $auth_id = Auth::user()->id;
         //dd($auth_id); exit();
@@ -408,6 +408,7 @@ class TreeController extends Controller
 
     }
 
+    //TREE DETAILS IN THE VIEW
     public function getTreeDetails($tree_id){
         // $root = SponsorTree::where('id', $tree_id)
         //         ->first();
@@ -421,6 +422,7 @@ class TreeController extends Controller
         return $root;
     }
 
+    //BASIC ENTRY FORM
     public function entry($id){
         //get sponsor tree id
 
@@ -436,6 +438,7 @@ class TreeController extends Controller
         return view('promotor.promoterEntry', ['id' => $id, 'sponsor_id' => $sponsor_id]);
     }
 
+    //NEW ENTRY FORM FOR PROMOTER//
     public function newentry(){
         //get sponsor tree id
         $auth_id = Auth::user()->id;
@@ -884,5 +887,20 @@ class TreeController extends Controller
         }
 
 
+    }
+
+    //2000 TAKA RECOVERY ENTRY FORM
+    public function recoveryentry(){
+        //get sponsor tree id
+        $auth_id = Auth::user()->id;
+        $user = User::where('id', $auth_id)
+                ->first();
+        //dd($user);exit();
+        $root = SponsorTree::where('user_id', $auth_id)
+            ->where('bc', 1)
+            ->first();
+        //dd($root); exit();
+
+        return view('promotor.newentry.recoveryentry', ['root' => $root, 'user' => $user]);
     }
 }

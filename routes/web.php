@@ -84,7 +84,8 @@ Route::get('/promotor/view','Promotor\TreeController@getSponsorTree')->name('pro
 Route::get('/promotor/meeting','Promotor\TreeController@meeting')->name('promotor.meeting');
 Route::post('/promotor/getbcdata', 'Promotor\TreeController@getbcdata')->name('promotor.getbcdata');
 
-
+/////----Recovery Entry ---------//////
+Route::get('/promotor/recoveryentry','Promotor\TreeController@recoveryentry')->name('promotor.recoveryentry');
 
 
 

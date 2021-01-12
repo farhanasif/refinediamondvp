@@ -135,6 +135,12 @@
                       <p>Total Sponsor Tree View</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="{{route('promotor.recoveryentry')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>Recovery Plan Entry</p>
+                    </a>
+                  </li>
 
                 </ul>
               </li>
