@@ -244,7 +244,7 @@
                                     <!-- text input -->
                                         <div class="form-group">
                                             <label>Total Receive Amount</label>
-                                            <input type="text" class="form-control" id="receive">
+                                            <input type="text" class="form-control" id="receive" onchange="calculate()">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -269,10 +269,38 @@
                                         </div>
                                     </div>
                                 </div>
+                                <br />
+                                <div class="form-row align-items-center">
+                                    <div class="col-md-4 mb-3">
+                                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                            <div class="input-group-text">MR NO</div>
+                                            </div>
+                                            <input type="text" class="form-control" id="mr_no" placeholder="MR NO">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                            <div class="input-group-text">Amount</div>
+                                            </div>
+                                            <input type="text" class="form-control" id="mr_amount" placeholder="Amount">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <button type="submit" class="btn btn-primary mb-2" onclick="addMr()">Add</button>
+                                    </div>
+                                    <div class="row pl-3">
+                                        <div id="mrview"><div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer">
+                        <div class="card-footer" >
                             <button type="submit" class="btn btn-primary" id="btnSave" onclick="savePromoter()">Submit Promotar</button>
                         </div>
                     </div>
@@ -295,10 +323,91 @@
     var promoter_valid = false;
     var sponsor_valid = true;
     var Swal = require('sweetalert2');
+    //var money_receipt = [];
+    var mramount = [];
+    var a = 1;
 
     $(function () {
         console.log('here');
     });
+
+    function addMr(){
+
+        var mr = $('#mr_no').val();
+        var mr_amount = $('#mr_amount').val();
+
+        if(mr !== '' && mr_amount !== ''){
+            var valid = 1;
+            for (i = 0; i < money_receipt.length; i++) {
+                if(money_receipt[i] == mr){
+                    valid = 0;
+                }
+            }
+            if(valid == 1){
+                money_receipt.push(mr);
+                money_receipt_amount.push(mr_amount);
+                $('#mr_no').val('');
+                $('#mr_amount').val('');
+                var investment = 0;
+                var text = '<ul class="list-group">';
+                for (i = 0; i < money_receipt.length; i++) {
+                    text += '<li class="list-group-item">Money Receipt : '+money_receipt[i] + ' |   Amount : '+money_receipt_amount[i] + '     <span class="badge badge-danger" onclick="removeMR('+i+')">Remove</span></li>';
+                    investment += parseInt(money_receipt_amount[i]);
+                }
+                text += '</ul>';
+                $('#mrview').html(text);
+                $('#investment').val(investment);
+            }
+            else{
+                alert('money receipt already used');
+            }
+
+
+        }
+
+        console.log(money_receipt);
+    }
+
+    function removeMR(index){
+        var r = confirm("Are you sure you want to remove Money Receipt : " +money_receipt[index]+"?");
+        if (r == true) {
+            money_receipt.splice(index,1);
+            var investment = 0;
+            var text = '<ul class="list-group">';
+            for (i = 0; i < money_receipt.length; i++) {
+                text += '<li class="list-group-item">Money Receipt : '+money_receipt[i] + ' |   Amount : '+money_receipt_amount[i] + '     <span class="badge badge-danger" onclick="removeMR('+i+')">Remove</span></li>';
+                investment += parseInt(money_receipt_amount[i]);
+            }
+            text += '</ul>';
+            $('#mrview').html(text);
+            $('#investment').val(investment);
+        } else {
+
+        }
+
+    }
+
+    function calculate(){
+        var i = $('#investment').val();
+        if(i == '' || i < 1){}
+        else{
+            var r = $('#receive').val();
+            if(r == '' || r < 1){}
+            else{
+                i = parseInt(i);
+                r = parseInt(r);
+                if(r > i){
+                    alert('receive is greater than investment');
+                }
+                else{
+                    var loss = i - r;
+                    var inactive = i+loss;
+                    $('#loss').val(loss);
+                    $('#inactive').val(inactive);
+                }
+            }
+        }
+    }
 
     function savePromoter(){
         if(promoter_valid == false){alert('Placement information is invalid');}

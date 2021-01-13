@@ -13,6 +13,11 @@ use DB;
 
 class TreeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     //PROMOTER TREE PAGE
     public function index($id = 0, $bc = 1){
         $auth_id = Auth::user()->id;

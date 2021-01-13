@@ -5,6 +5,8 @@
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
+  var money_receipt = [];
+  var money_receipt_amount = [];
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
