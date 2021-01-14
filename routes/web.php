@@ -86,9 +86,9 @@ Route::post('/promotor/getbcdata', 'Promotor\TreeController@getbcdata')->name('p
 
 /////----Recovery Entry ---------//////
 Route::get('/promotor/recoveryentry','Promotor\TreeController@recoveryentry')->name('promotor.recoveryentry');
-
-
-
+Route::post('/promotor/savenewpromoterforrecovery','Promotor\TreeController@savenewpromoterforrecovery')->name('promotor.savenewpromoterforrecovery');
+Route::post('/promotor/autosavenewpromoterforrecovery','Promotor\TreeController@autosavenewpromoterforrecovery')->name('promotor.autosavenewpromoterforrecovery');
+Route::get('/promotor/recoveryview','Promotor\TreeController@recoveryview')->name('promotor.recoveryview');
 
 
 

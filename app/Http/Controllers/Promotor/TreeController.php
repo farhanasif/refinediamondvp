@@ -458,6 +458,7 @@ class TreeController extends Controller
         return view('promotor.newentry.promoterEntry', ['root' => $root, 'user' => $user]);
     }
 
+    //SAVE NEW PROMOTER INFORMATION ---OLD
     public function savePromoter(){
         $sponsor_id = $_GET['sponsor_id'];
         $placement = $_GET['placement'];
@@ -571,6 +572,7 @@ class TreeController extends Controller
         }
     }
 
+    //SAVE NEW PROMOTER INFORMATION
     public function savenewpromoter(Request $request){
         //inputs
         $sponsor_mobile = $request->input('sponsor_mobile');
@@ -908,4 +910,458 @@ class TreeController extends Controller
 
         return view('promotor.newentry.recoveryentry', ['root' => $root, 'user' => $user]);
     }
+
+    public function savenewpromoterforrecovery(Request $request){
+        //inputs
+        $sponsor_mobile = $request->input('sponsor_mobile');
+        $sponsor_bc = $request->input('sponsor_bc');
+        $placement = $request->input('placement');
+        $placement_bc = $request->input('placement_bc');
+        $position = $request->input('position');
+        $package = $request->input('package');
+        $product = $request->input('product');
+        $full_name = $request->input('full_name');
+        $mobile = $request->input('mobile');
+        $trans_password = $request->input('trans_password');
+
+        $fathers = $request->input('fathers');
+        $mothers = $request->input('mothers');
+        $address = $request->input('address');
+        $email = $request->input('email');
+        $emergency_contact = $request->input('emergency_contact');
+
+        $company = $request->input('company');
+        $previous_id = $request->input('previous_id');
+        $investment = $request->input('investment');
+        $receive = $request->input('receive');
+        $loss = $request->input('loss');
+        $inactive = $request->input('inactive');
+        $team_lead = $request->input('team_lead');
+
+        $mr = $request->input('mr');
+        $mr_amount = $request->input('mr_amount');
+
+        //dd($mr);exit();
+        //FIRST CHECK MONEY RECEIPT IS VALID OR NOT
+        $check_mr_query = "select * from recovery_users_money_receipt where money_receipt in (";
+        $len = count($mr);
+        //dd($len); exit();
+        if($len < 1){
+            return 'error,  No Money Receipt Found';
+        }
+        else{
+            for($i = 0; $i < $len; $i++){
+                $check_mr_query = $check_mr_query. "'".$mr[$i]."',";
+            }
+        }
+        $check_mr_query = rtrim($check_mr_query, ",");
+        $check_mr_query = $check_mr_query. ") and company='".$company."'";
+
+        $check_mr = DB::select($check_mr_query);
+        //dd($check_mr_query); exit();
+        if($check_mr){
+            return 'error,  Money Receipt Already Enterted';
+        }
+        else{
+            //ENTRY TO NET
+            //check validation
+            //dd($sponsor_mobile);exit();
+            if($sponsor_mobile == ''){
+                return 'error,sponsor is not valid';
+            }
+            else{
+                //check sponsor
+                $user = DB::select("select u.id, u.name from users u inner join sponsor_tree st on u.id = st.user_id and u.mobile = '".$sponsor_mobile."' limit 1");
+                
+                if($user){
+                    $sponsor_id = $user[0]->id;
+                    //check placement validity
+                    $query = "select st.id, u.name, st.parent, st.left, st.right from users u inner join sponsor_tree st on u.id = st.user_id and u.mobile = '".$placement."' where st.bc='".$placement_bc."' limit 1";
+                    $place_check = DB::select($query);
+
+                    if($place_check){
+                        //check if placement already has left right
+                        if($position == 'L' && $place_check[0]->left > 0)
+                        {
+                            return 'error,there is already a placement on the place';
+                        }
+                        else if($position == 'R' && $place_check[0]->right > 0){
+                            return 'error,there is already a placement on the place';
+                        }
+                        else{
+                            //check if placement is under parent
+                            //check if placement is uder its bc 1
+                            //check sponsor bc
+                            $sp_query = "select * from sponsor_tree where user_id =".$sponsor_id." and bc=".$sponsor_bc." limit 1";
+                            $sp_res = DB::select($sp_query);
+                            if($sp_res){
+                                //we need to enter as per bc id of each mobile
+                                $sp_bc_id = $sp_res[0]->id;
+                                $topline = DB::select("
+                                SELECT T2.id, T2.parent, T2.user_id, T2.bc, u.mobile
+                                    FROM (
+                                        SELECT
+                                            @r AS _id,
+                                            (SELECT @r := parent FROM sponsor_tree WHERE id = _id) AS parent,
+                                            @l := @l + 1 AS lvl
+                                        FROM
+                                            (SELECT @r := ".$place_check[0]->id.", @l := 0) vars,
+                                            sponsor_tree h
+                                        WHERE @r <> 0) T1
+                                    JOIN sponsor_tree T2
+                                    ON T1._id = T2.id
+                                    join users u
+                                    on u.id = T2.user_id
+                                    ORDER BY T1.lvl desc
+                                ");
+                                
+                                //dd($topline);exit();
+
+                                if($topline){
+                                    $length = count($topline);
+                                    $sp_valid = 0; //invalid
+                                    $own_bc = 0; //invalid
+                                    $new = 1; //yes
+                                    for($i = 0; $i < $length; $i++){
+                                        //check if sponsor matched or not
+                                        if($topline[$i]->mobile == $sponsor_mobile){
+                                            $sp_valid = 1; //valid
+                                        }
+
+                                        //must match team lead in upline
+                                        if($topline[$i]->mobile == $team_lead){
+                                            $sp_valid = 1; //valid
+                                        }
+
+                                        //check if own bc 1 matched ot not
+                                        if($topline[$i]->mobile == $mobile){
+                                            $new = 0;
+                                            //check if own bc 1 or not
+                                            if($topline[$i]->bc == 1){
+                                                $own_bc = 1; //valid
+                                            }
+
+                                            $sp_valid = 0; //invalid
+
+                                        }
+                                    }
+
+                                    // /echo $sp_valid.'-'.$own_bc.'-'.$new; exit();
+                                    //if not new check validity
+                                    $validity = 0;
+                                    if($new == 0){
+                                        if($sp_valid == 1 && $own_bc == 1){
+                                        }
+                                        else{
+                                            //invalid
+                                            return 'error,Sponsor and Placement is invalid';
+                                        }
+                                    }
+                                    else{
+                                        if($sp_valid == 0){
+                                            $validity = 1;
+                                        }
+                                    }
+
+                                    if($validity == 0){
+                                        //save in user
+                                        //check if mobile already exists, then another cb
+                                        $id = 0;
+                                        $users = DB::table('users')->where('mobile', $mobile)->first();
+                                        if($users){
+                                            $id = $users->id;
+                                            //claculate bc
+                                            $sp_users = DB::table('sponsor_tree')->where('user_id', $id)->count();
+
+                                            if($sp_users < 1){
+                                                $bc = 1;
+                                            }
+                                            else{
+                                                $is_bc_valid = 0;
+                                                for($i = 0; $i < $length; $i++){
+                                                    //check if user has bc then we need to chcek again topline
+                                                    if($topline[$i]->mobile == $mobile){
+                                                        $is_bc_valid = 1;
+                                                    }
+                                                }
+                                                //if own bc is valid
+                                                if($is_bc_valid == 1){
+                                                    $bc = $sp_users + 1;
+                                                }
+                                                else{
+                                                    return "error,Placement BC is in Cross Line";
+                                                }
+
+                                            }
+                                        }
+                                        else{
+                                            //create user
+                                            $password = '123456';
+                                            $password = Hash::make($password);
+                                            $email = "mail_".$mobile."_".rand(1000,9999)."@gmail.com";
+                                            $id = DB::table('users')->insertGetId(
+                                                [
+                                                    'email' => $email,
+                                                    'name' => $full_name,
+                                                    'password' => $password,
+                                                    'role' => 'promoter',
+                                                    'mobile' => $mobile,
+                                                    'transaction_pass' => '1234',
+                                                    'created_at' => Date('Y-m-d h:i:s'),
+                                                    'updated_at' => Date('Y-m-d h:i:s')
+                                                ]
+                                            );
+                                            $bc = 1;
+                                        }
+                                        //save in sponsor tree
+                                        //placement
+                                        //save sponsor tree
+                                        $sponsor_tree_id = DB::table('sponsor_tree')->insertGetId(
+                                            [
+                                                'user_id' => $id,
+                                                'parent' => $place_check[0]->id,
+                                                'left' => 0,
+                                                'right' => 0,
+                                                'sponsor_id' => $sp_bc_id,
+                                                'bc' => $bc,
+                                                'package' => $package
+                                            ]
+                                        );
+
+                                        //echo $sponsor_tree_id;
+
+                                        if($position == 'L'){
+                                            DB::table('sponsor_tree')
+                                            ->where('id', $place_check[0]->id)
+                                            ->update(['left' => $sponsor_tree_id]);
+                                        }
+                                        else{
+                                            DB::table('sponsor_tree')
+                                            ->where('id', $place_check[0]->id)
+                                            ->update(['right' => $sponsor_tree_id]);
+                                        }
+
+
+                                        //ENTRY TO RECOVERY USERS
+                                        $ru_id = DB::table('recovery_users')->insertGetId(
+                                            [
+                                                'full_name' => $full_name,
+                                                'fathers' => $fathers,
+                                                'mothers' => $mothers,
+                                                'address' => $address,
+                                                'team_lead_id' => $team_lead,
+                                                'email' => $email,
+                                                'mobile' => $mobile,
+                                                'emergency_contact' => $emergency_contact,
+                                                'created_at' => date('Y-m-d h:i:s'),
+                                                'updated_at' => date('Y-m-d h:i:s'),
+                                                'user_id' => $id
+                                            ]
+                                        );
+
+                                        if($ru_id){
+                                            $rupi_id = DB::table('recovery_users_previous_information')->insertGetId(
+                                                [
+                                                    'recovery_user_id' => $ru_id,
+                                                    'company' => $company,
+                                                    'previous_id' => $previous_id,
+                                                    'investment' => $investment,
+                                                    'receive' => $receive,
+                                                    'loss' => $loss,
+                                                    'inactive' => $inactive,
+                                                    'owner' => $mobile,
+                                                    'created_at' => date('Y-m-d h:i:s'),
+                                                    'updated_at' => date('Y-m-d h:i:s'),
+                                                    'auto_recovery_id' => $ru_id
+                                                ]
+                                            );
+
+                                            if($rupi_id){
+                                                for($j = 0; $j < $len; $j++){
+                                                    DB::table('recovery_users_money_receipt')->insert(
+                                                        [
+                                                            'recovery_user_id' => $ru_id,
+                                                            'pi_id' => $rupi_id,
+                                                            'money_receipt' => $mr[$j],
+                                                            'amount' => $mr_amount[$j],
+                                                            'company' => $company,
+                                                            'created_at' => date('Y-m-d h:i:s'),
+                                                            'updated_at' => date('Y-m-d h:i:s')
+                                                        ]
+                                                    );
+                                                }
+                                            }
+
+                                        }
+
+                                        return 'success,Created Successfully';
+                                        //update package
+                                    }
+                                    else{
+                                        return 'error,an error occured';
+                                    }
+                                }
+                                else{
+                                    return 'error,an error occured';
+                                }
+                            }
+                            else{
+                                return "error,Sponsor mobile and BC not matching";
+                            }
+
+
+
+                        }
+
+                        //save in user
+                        //check if mobile already exists, then another cb
+
+                    }
+                    else{
+                        return 'error,placement is not valid';
+                    }
+                }
+                else{
+                    return 'error, sponsor is not valid';
+                }
+            }
+        }
+    }
+
+
+    public function autosavenewpromoterforrecovery(Request $request){
+        //inputs
+        $auto_transfer_mobile = $request->input('auto_transfer_mobile');
+        $full_name = $request->input('full_name');
+        $mobile = $request->input('mobile');
+        $trans_password = $request->input('trans_password');
+
+        $fathers = $request->input('fathers');
+        $mothers = $request->input('mothers');
+        $address = $request->input('address');
+        $email = $request->input('email');
+        $emergency_contact = $request->input('emergency_contact');
+
+        $company = $request->input('company');
+        $previous_id = $request->input('previous_id');
+        $investment = $request->input('investment');
+        $receive = $request->input('receive');
+        $loss = $request->input('loss');
+        $inactive = $request->input('inactive');
+        $team_lead = $request->input('team_lead');
+
+        $mr = $request->input('mr');
+        $mr_amount = $request->input('mr_amount');
+
+        //dd($mr);exit();
+        //FIRST CHECK MONEY RECEIPT IS VALID OR NOT
+        $check_mr_query = "select * from recovery_users_money_receipt where money_receipt in (";
+        $len = count($mr);
+        //dd($len); exit();
+        if($len < 1){
+            return 'error,  No Money Receipt Found';
+        }
+        else{
+            for($i = 0; $i < $len; $i++){
+                $check_mr_query = $check_mr_query. "'".$mr[$i]."',";
+            }
+        }
+        $check_mr_query = rtrim($check_mr_query, ",");
+        $check_mr_query = $check_mr_query. ") and company='".$company."'";
+
+        $check_mr = DB::select($check_mr_query);
+        //dd($check_mr_query); exit();
+        if($check_mr){
+            return 'error,  Money Receipt Already Enterted';
+        }
+        else{
+
+            //CHECK AUTO RECEOVERY MOBILE VALIDITY
+            $user = DB::select("select u.id, u.name, u.mobile from users u inner join sponsor_tree st on u.id = st.user_id and u.mobile = '".$auto_transfer_mobile."' limit 1");
+            if($user){
+                $recovery_details = DB::select('select * from recovery_users where user_id='.$user[0]->id);
+                $auto_recovery_id = $recovery_details[0]->id;
+
+                $chk_mobile = DB::select("select * from recovery_users where mobile='".$mobile."' and user_id=".$user[0]->id);
+
+                if($chk_mobile){
+                    return 'error, mobile already entered for this Auto transfer no';
+                }
+                else{
+                    //ENTRY TO RECOVERY USERS
+                    $ru_id = DB::table('recovery_users')->insertGetId(
+                        [
+                            'full_name' => $full_name,
+                            'fathers' => $fathers,
+                            'mothers' => $mothers,
+                            'address' => $address,
+                            'team_lead_id' => $team_lead,
+                            'email' => $email,
+                            'mobile' => $mobile,
+                            'emergency_contact' => $emergency_contact,
+                            'created_at' => date('Y-m-d h:i:s'),
+                            'updated_at' => date('Y-m-d h:i:s'),
+                            'user_id' => $user[0]->id
+                        ]
+                    );
+
+                    if($ru_id){
+                        $rupi_id = DB::table('recovery_users_previous_information')->insertGetId(
+                            [
+                                'recovery_user_id' => $ru_id,
+                                'company' => $company,
+                                'previous_id' => $previous_id,
+                                'investment' => $investment,
+                                'receive' => $receive,
+                                'loss' => $loss,
+                                'inactive' => $inactive,
+                                'created_at' => date('Y-m-d h:i:s'),
+                                'updated_at' => date('Y-m-d h:i:s'),
+                                'auto_recovery_id' => $auto_recovery_id
+                            ]
+                        );
+
+                        if($rupi_id){
+                            for($j = 0; $j < $len; $j++){
+                                DB::table('recovery_users_money_receipt')->insert(
+                                    [
+                                        'recovery_user_id' => $auto_recovery_id,
+                                        'pi_id' => $rupi_id,
+                                        'money_receipt' => $mr[$j],
+                                        'amount' => $mr_amount[$j],
+                                        'company' => $company,
+                                        'created_at' => date('Y-m-d h:i:s'),
+                                        'updated_at' => date('Y-m-d h:i:s')
+                                    ]
+                                );
+                            }
+                        }
+
+                    }
+
+                    return 'success,Created Successfully';
+                }
+
+            }
+            else{
+                return 'error, Recovery user is not valid';
+            }
+        }
+    }
+
+    public function recoveryview(){
+        $query = "select ru.*, rupi.*, u.mobile as bc_mobile, rumr.money_receipt, rumr.amount  from recovery_users ru
+        inner join recovery_users_previous_information rupi
+        on ru.id = rupi.recovery_user_id
+        inner join users u
+        on u.id = ru.user_id
+        inner join recovery_users_money_receipt rumr
+        on rumr.pi_id = rupi.id
+        order by rupi.auto_recovery_id, ru.id";
+
+        $results = DB::select($query);
+        return view('promotor.newentry.recoveryview',compact('results'));
+    }
+
+
 }

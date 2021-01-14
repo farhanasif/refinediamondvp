@@ -43,7 +43,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-
+                    <!-- /.Personal Information -->
                     <div class="card card-outline card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Presonal Information</h3>
@@ -60,7 +60,7 @@
                                     <div class="col-sm-12">
                                     <!-- text input -->
                                         <div class="form-group">
-                                            <label>Full Name</label>
+                                            <label>Full Name <b class="text-danger">*</b></label>
                                             <input type="text" class="form-control" id="full_name">
                                         </div>
                                     </div>
@@ -99,7 +99,7 @@
                                     <div class="col-sm-6">
                                     <!-- text input -->
                                         <div class="form-group">
-                                            <label>Contact/Mobile</label>
+                                            <label>Contact/Mobile<b class="text-danger">*</b></label>
                                             <input type="text" class="form-control" id="mobile">
                                         </div>
                                     </div>
@@ -114,7 +114,7 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
+                    <!-- /.Placement Information -->
                     <div class="card card-outline card-warning">
                         <div class="card-header">
                             <h3 class="card-title">Sponsor And Placement</h3>
@@ -131,27 +131,27 @@
                                 <div class="col-sm-6">
                                 <!-- text input -->
                                     <div class="form-group">
-                                        <label>Sponsor Mobile</label>
+                                        <label>Sponsor Mobile<b class="text-danger">*</b></label>
                                         <input type="text" class="form-control" id="sponsor_mobile" value="{{$user->mobile}}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                 <!-- text input -->
                                     <div class="form-group">
-                                        <label>Sponsor BC</label>
+                                        <label>Sponsor BC<b class="text-danger">*</b></label>
                                         <input type="text" class="form-control" id="sponsor_bc" value="{{$root->bc}}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Placement Mobile</label>
+                                        <label>Placement Mobile<b class="text-danger">*</b></label>
                                         <input type="text" class="form-control" id="placement" value="" onchange="checkPlacementWithBC()">
                                         <div class="form-text" id="placement_help"></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Placement BC</label>
+                                        <label>Placement BC<b class="text-danger">*</b></label>
                                         <input type="text" class="form-control" id="placement_bc" value="1" onchange="checkPlacementWithBC()">
                                     </div>
                                 </div>
@@ -160,7 +160,7 @@
                                 <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>Position</label>
+                                    <label>Position<b class="text-danger">*</b></label>
                                     <select class="form-control" id="position">
                                         <option value="L">Team A</option>
                                         <option value="R">Team B</option>
@@ -169,12 +169,12 @@
                                 </div>
                                 <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Package</label>
+                                    <label>Package<b class="text-danger">*</b></label>
                                     <select class="form-control" id="package">
                                         <option value="Package 1">Package 1</option>
                                         <option value="Package 2">Package 2</option>
                                         <option value="100">100 (Free User)</option>
-                                        <option value="2000">2000 (Hope Digital City)</option>
+                                        <option value="2000">2000 (Recovery Entry)</option>
                                     </select>
                                 </div>
                                 </div>
@@ -193,7 +193,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="text-danger"># Use Recovery Auto Transfer Mobile</label>
+                                        <label class="text-danger"># Use Recovery Auto Transfer Mobile <b class="text-danger">*</b></label>
                                         <input type="text" class="form-control" id="auto_transfer_mobile" value="">
                                     </div>
                                 </div>
@@ -202,7 +202,7 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
+                    <!-- /.Previous Information -->
                     <div class="card card-outline card-danger">
                         <div class="card-header">
                             <h3 class="card-title">Previous Company Information</h3>
@@ -219,7 +219,7 @@
                                     <div class="col-sm-12">
                                     <!-- text input -->
                                         <div class="form-group">
-                                            <label>Company Name</label>
+                                            <label>Company Name<b class="text-danger">*</b></label>
                                             <input type="text" class="form-control" id="company">
                                         </div>
                                     </div>
@@ -228,14 +228,14 @@
                                     <div class="col-sm-6">
                                     <!-- text input -->
                                         <div class="form-group">
-                                            <label>Previous ID</label>
+                                            <label>Previous ID<b class="text-danger">*</b></label>
                                             <input type="text" class="form-control" id="previous_id">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Total Investment Amount</label>
-                                            <input type="text" class="form-control" id="investment">
+                                            <input type="text" class="form-control" id="investment" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -243,14 +243,14 @@
                                     <div class="col-sm-6">
                                     <!-- text input -->
                                         <div class="form-group">
-                                            <label>Total Receive Amount</label>
+                                            <label>Total Receive Amount<b class="text-danger">*</b></label>
                                             <input type="text" class="form-control" id="receive" onchange="calculate()">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Total Loss Amount</label>
-                                            <input type="text" class="form-control" id="loss">
+                                            <input type="text" class="form-control" id="loss" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -410,8 +410,10 @@
     }
 
     function savePromoter(){
-        if(promoter_valid == false){alert('Placement information is invalid');}
+        var auto_transfer_mobile = $('#auto_transfer_mobile').val();
+        if(promoter_valid == false && auto_transfer_mobile == ''){alert('Placement information is invalid');}
         else{
+            //placement information
             var sponsor_mobile = $('#sponsor_mobile').val();
             var sponsor_bc = $('#sponsor_bc').val();
             var placement = $('#placement').val();
@@ -419,56 +421,195 @@
             var position = $('#position').val();
             var package = $('#package').val();
             var product = $('#product').val();
+            var trans_password = '1234';
+
+
+            //personal information
             var full_name = $('#full_name').val();
+            var fathers = $('#fathers').val();
+            var mothers = $('#mothers').val();
+            var address = $('#full_name').val();
+            var email = $('#full_name').val();
             var mobile = $('#mobile').val();
-            var trans_password = $('#trans_password').val();
+            var emergency_contact = $('#emergency_contact').val();
 
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+            //previous information
+            var company = $('#company').val();
+            var previous_id  = $('#previous_id').val();
+            var investment = $('#investment').val();
+            var receive = $('#receive').val();
+            var loss = $('#loss').val();
+            var inactive = $('#inactive').val();
+            var team_lead = $('#team_lead').val();
+            var mr = money_receipt;
+            var mr_amount = money_receipt_amount;
 
-            $.ajax({
-                type: 'POST',
-                url: './savenewpromoter',
-                data: {
-                    sponsor_mobile: sponsor_mobile,
-                    sponsor_bc: sponsor_bc,
-                    placement: placement,
-                    placement_bc: placement_bc,
-                    position: position,
-                    package: package,
-                    product: product,
-                    full_name: full_name,
-                    mobile: mobile,
-                    trans_password: trans_password
-                },
-                dataType: 'text',
-                success: function (data) {
-                    // console.log(data);
-                    // alert(data);
-                    var res = data.split(",");
-                    if(res[0] == 'error'){
-                        Swal.fire({
-                            title: 'Error!',
-                            text: res[1],
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        })
+            if(full_name == ''
+                || mobile == ''
+                || company  == ''
+                || team_lead == ''){
 
-                    }
-                    else{
-                        Swal.fire({
-                            title: 'Promoter Inserted Successfully!',
-                            text: res[1],
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        })
+                if(auto_transfer_mobile == ''){
+                    if(sponsor_mobile == ''
+                    || placement == ''){
+                        alert('fill up all the required field');
+                        return;
                     }
                 }
-            });
+
+
+
+            }
+
+            if(money_receipt.length < 1){
+                alert('no money receipt added');
+                return;
+            }
+
+            if(auto_transfer_mobile == ''){
+                var r = confirm("Use Recovery Auto Transfer Mobile  is blank. Are you sure you want to create e new Entry  ?");
+                if (r == true) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    // need to check money receipt
+
+                    $.ajax({
+                        type: 'POST',
+                        url: './savenewpromoterforrecovery',
+                        data: {
+                            sponsor_mobile: sponsor_mobile,
+		            sponsor_bc: sponsor_bc,
+		            placement: placement,
+		            placement_bc: placement_bc,
+		            position: position,
+		            package: package,
+		            product: product,
+                            trans_password: trans_password,
+
+                            full_name: full_name,
+                            mobile: mobile,
+                            fathers: fathers,
+                            mothers: mothers,
+                            address: address,
+                            email: email,
+                            emergency_contact: emergency_contact,
+
+                            company: company,
+                            previous_id: previous_id,
+                            investment: investment,
+                            receive: receive,
+                            loss: loss,
+                            inactive: inactive,
+                            team_lead: team_lead,
+                            mr: mr,
+                            mr_amount: mr_amount,
+                        },
+                        dataType: 'text',
+                        success: function (data) {
+                            console.log(data);
+                            //alert(data);
+                            var res = data.split(",");
+                            if(res[0] == 'error'){
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: res[1],
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                })
+
+                            }
+                            else{
+
+                                //now we create recovery information and previous information
+
+                                Swal.fire({
+                                    title: 'Inserted Successfully!',
+                                    text: res[1],
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                })
+                            }
+                        }
+                    });
+                } else {
+
+                }
+
+            }
+            else{
+                //update on auto recovery mobile
+                var r = confirm("Are you sure you want to update on the auto recovery mobile?");
+                if (r == true) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    // need to check money receipt
+
+                    $.ajax({
+                        type: 'POST',
+                        url: './autosavenewpromoterforrecovery',
+                        data: {
+                            auto_transfer_mobile: auto_transfer_mobile,
+                            trans_password: trans_password,
+
+                            full_name: full_name,
+                            mobile: mobile,
+                            fathers: fathers,
+                            mothers: mothers,
+                            address: address,
+                            email: email,
+                            emergency_contact: emergency_contact,
+
+                            company: company,
+                            previous_id: previous_id,
+                            investment: investment,
+                            receive: receive,
+                            loss: loss,
+                            inactive: inactive,
+                            team_lead: team_lead,
+                            mr: mr,
+                            mr_amount: mr_amount,
+                        },
+                        dataType: 'text',
+                        success: function (data) {
+                            console.log(data);
+                            //alert(data);
+                            var res = data.split(",");
+                            if(res[0] == 'error'){
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: res[1],
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                })
+
+                            }
+                            else{
+
+                                //now we create recovery information and previous information
+                                //update money receipt to blank
+
+                                Swal.fire({
+                                    title: 'Inserted Successfully!',
+                                    text: res[1],
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                })
+                            }
+                        }
+                    });
+                } else {
+
+                }
+
+            }
+
         }
 
     }
