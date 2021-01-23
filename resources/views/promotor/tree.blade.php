@@ -15,6 +15,14 @@
     justify-content: center;
   }
 
+  .tf-custom .tf-nc-recovery {
+    background-color:  #c3caf1 ;
+    border-color:  #c3caf1 ;
+    border-radius: 5%;
+    align-items: center;
+    justify-content: center;
+  }
+
   /* make the horizontal and vertical connectors thick and change their color */
 
   .tf-custom .tf-nc:before,
@@ -88,31 +96,7 @@
     background-color: #dae5e5;
     }
 </style>
-@if(Session::has('success') || Session::has('failed') || Session::has('error'))
-<section class="content">
-    <div class="col-md-8 offset-2 mt-2">
-        @if(Session::has('success'))
-        <div class="alert alert-success alert-block text-center">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong class="text-center">{{ Session::get('success') }}</strong>
-        </div>
-        @endif
 
-        @if(Session::has('failed'))
-        <div class="alert alert-danger alert-block text-center">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong> {{ Session::get('failed') }}</strong>
-        </div>
-        @endif
-        @if(Session::has('error'))
-        <div class="alert alert-danger alert-block text-center">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ Session::get('error') }}</strong>
-        </div>
-        @endif
-    </div>
-</section>
-@endif
 
 <section class="content-header">
     <div class="container-fluid">
@@ -154,14 +138,14 @@
                     <div class="tf-tree tf-custom">
                         <ul>
                             <li>
-                                <span class="tf-nc elevation-3">
+                                <span class="tf-nc elevation-3 text-center">
                                   @if($node_1_user_id > 0)
                                     <a href="{{ url('/promotor/tree/'.$node_1_user_id.'/'.$node_1_bc) }}">
                                         <img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                         style="opacity: .8">
                                     </a>
                                     <br/>
-
+                                    <b class="text-blue">{{ $node_1_name }}</b><br />
                                     <b>{{ $node_1_mobile }}</b>
                                     <br/>
                                     @if($node_1_user_id == 4)
@@ -176,10 +160,11 @@
                                 </span>
                                 <ul>
                                     <li>
-                                        <span class="tf-nc elevation-3">
+                                        <span class="tf-nc elevation-3 text-center">
                                           @if($node_11_user_id > 0)
                                           <a href="{{ url('/promotor/tree/'.$node_11_user_id.'/'.$node_11_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                                            <b class="text-blue">{{ $node_11_name }}</b><br />
                                           <b>{{ $node_11_mobile }}</b><br/>
                                           <a href="#" onclick="getTooltip({{$node_11_user_id}},{{$node_11_bc}})">BC {{ $node_11_bc }}</a>
                                           @else
@@ -188,10 +173,11 @@
                                         </span>
                                         <ul>
                                             <li>
-                                              <span class="tf-nc  elevation-3">
+                                              <span class="tf-nc  elevation-3 text-center">
                                                 @if($node_111_user_id > 0)
                                                 <a href="{{ url('/promotor/tree/'.$node_111_user_id.'/'.$node_111_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                                                <b class="text-blue">{{ $node_111_name }}</b><br />
                                                 <b>{{ $node_111_mobile }}</b><br/>
                                                 <a href="#" onclick="getTooltip({{$node_111_user_id}},{{$node_111_bc}})">BC {{ $node_111_bc }}</a>
                                                 @else
@@ -199,20 +185,22 @@
                                                 @endif
                                               </span>
                                                 <ul>
-                                                    <li><span class="tf-nc elevation-3">
+                                                    <li><span class="tf-nc elevation-3 text-center">
                                                       @if($node_1111_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1111_user_id.'/'.$node_1111_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                    <b class="text-blue">{{ $node_1111_name }}</b><br />
                                                         <b>{{ $node_1111_mobile }}</b><br/>
                                                         <a href="#" onclick="getTooltip({{$node_1111_user_id}},{{$node_1111_bc}})">BC {{ $node_1111_bc }}</a>
                                                       @else
                                                           +
                                                       @endif
                                                     </span></li>
-                                                    <li><span class="tf-nc elevation-3">
+                                                    <li><span class="tf-nc elevation-3 text-center">
                                                       @if($node_1112_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1112_user_id.'/'.$node_1112_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                    <b class="text-blue">{{ $node_1112_name }}</b><br />
                                                       <b>{{ $node_1112_mobile }}</b><br/>
                                                       <a href="#" onclick="getTooltip({{$node_1112_user_id}},{{$node_1112_bc}})">BC {{ $node_1112_bc }}</a>
                                                       @else
@@ -222,10 +210,11 @@
                                                 </ul>
                                             </li>
                                             <li>
-                                                <span class="tf-nc elevation-3">
+                                                <span class="tf-nc elevation-3 text-center">
                                                   @if($node_112_user_id > 0)
                                                   <a href="{{ url('/promotor/tree/'.$node_112_user_id.'/'.$node_112_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                    <b class="text-blue">{{ $node_112_name }}</b><br />
                                                   <b>{{ $node_112_mobile }}</b><br/>
                                                   <a href="#" onclick="getTooltip({{$node_112_user_id}},{{$node_112_bc}})">BC {{ $node_112_bc }}</a>
                                                   @else
@@ -233,20 +222,22 @@
                                                   @endif
                                                 </span>
                                                 <ul>
-                                                    <li><span class="tf-nc elevation-3">
+                                                    <li><span class="tf-nc elevation-3 text-center">
                                                       @if($node_1121_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1121_user_id.'/'.$node_1121_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                                                         style="opacity: .8"></a><br/>
+                                                        <b class="text-blue">{{ $node_1121_name }}</b><br />
                                                         <b>{{ $node_1121_mobile }}</b><br/>
                                                         <a href="#" onclick="getTooltip({{$node_1121_user_id}},{{$node_1121_bc}})">BC {{ $node_1121_bc }}</a>
                                                       @else
                                                           +
                                                       @endif
                                                     </span></li>
-                                                    <li><span class="tf-nc elevation-3">
+                                                    <li><span class="tf-nc elevation-3 text-center">
                                                       @if($node_1122_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1122_user_id.'/'.$node_1122_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                    <b class="text-blue">{{ $node_1122_name }}</b><br />
                     <b>{{ $node_1122_mobile }}</b><br/>
                     <a href="#" onclick="getTooltip({{$node_1122_user_id}},{{$node_1122_bc}})">BC {{ $node_1122_bc }}</a>
                                                       @else
@@ -258,11 +249,11 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <span class="tf-nc elevation-3">
+                                        <span class="tf-nc elevation-3 text-center">
                                           @if($node_12_user_id > 0)
                                           <a href="{{ url('/promotor/tree/'.$node_12_user_id.'/'.$node_12_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
-
+                    <b class="text-blue">{{ $node_12_name }}</b><br />
                     <b>{{ $node_12_mobile }}</b><br/>
                     <a href="#" onclick="getTooltip({{$node_12_user_id}},{{$node_12_bc}})">BC {{ $node_12_bc }}</a>
                                           @else
@@ -270,10 +261,11 @@
                                           @endif
                                         </span>
                                         <ul>
-                                            <li><span class="tf-nc elevation-3">
+                                            <li><span class="tf-nc elevation-3 text-center">
                                               @if($node_121_user_id > 0)
                                               <a href="{{ url('/promotor/tree/'.$node_121_user_id.'/'.$node_121_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                    <b class="text-blue">{{ $node_121_name }}</b><br />
                                               <b>{{ $node_121_mobile }}</b><br/>
                                               <a href="#" onclick="getTooltip({{$node_121_user_id}},{{$node_121_bc}})">BC {{ $node_121_bc }}</a>
                                               @else
@@ -281,20 +273,22 @@
                                               @endif
                                             </span>
                                                 <ul>
-                                                    <li><span class="tf-nc elevation-3">
+                                                    <li><span class="tf-nc elevation-3 text-center">
                                                       @if($node_1211_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1211_user_id.'/'.$node_1211_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                    <b class="text-blue">{{ $node_1211_name }}</b><br />
                     <b>{{ $node_1211_mobile }}</b><br/>
                     <a href="#" onclick="getTooltip({{$node_1211_user_id}},{{$node_1211_bc}})">BC {{ $node_1211_bc }}</a>
                                                       @else
                                                           +
                                                       @endif
                                                     </span></li>
-                                                    <li><span class="tf-nc elevation-3">
+                                                    <li><span class="tf-nc elevation-3 text-center">
                                                       @if($node_1212_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1212_user_id.'/'.$node_1212_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                    <b class="text-blue">{{ $node_1212_name }}</b><br />
                     <b>{{ $node_1212_mobile }}</b><br/>
                     <a href="#" onclick="getTooltip({{$node_1212_user_id}},{{$node_1212_bc}})">BC {{ $node_1212_bc }}</a>
                                                       @else
@@ -303,10 +297,11 @@
                                                     </span></li>
                                                 </ul>
                                             </li>
-                                            <li><span class="tf-nc elevation-3">
+                                            <li><span class="tf-nc elevation-3 text-center">
                                                 @if($node_122_user_id > 0)
                                                 <a href="{{ url('/promotor/tree/'.$node_122_user_id.'/'.$node_122_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                    <b class="text-blue">{{ $node_122_name }}</b><br />
                     <b>{{ $node_122_mobile }}</b><br/>
                     <a href="#" onclick="getTooltip({{$node_122_user_id}},{{$node_122_bc}})">BC {{ $node_122_bc }}</a>
                                                 @else
@@ -314,21 +309,23 @@
                                                 @endif
                                               </span>
                                                 <ul>
-                                                    <li><span class="tf-nc elevation-3">
+                                                    <li><span class="tf-nc elevation-3 text-center">
                                                       @if($node_1221_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1221_user_id.'/'.$node_1221_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
+                    <b class="text-blue">{{ $node_1221_name }}</b><br />
                     <b>{{ $node_1221_mobile }}</b><br/>
                     <a href="#" onclick="getTooltip({{$node_1221_user_id}},{{$node_1221_bc}})">BC {{ $node_1221_bc }}</a>
                                                       @else
                                                           +
                                                       @endif
                                                     </span></li>
-                                                    <li><span class="tf-nc elevation-3">
+                                                    <li><span class="tf-nc elevation-3 text-center">
                                                       @if($node_1222_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1222_user_id.'/'.$node_1222_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
-                    <b>{{ $node_122_mobile }}</b><br/>
+                    <b class="text-blue">{{ $node_1222_name }}</b><br />
+                    <b>{{ $node_1222_mobile }}</b><br/>
                     <a href="#" onclick="getTooltip({{$node_1222_user_id}},{{$node_1222_bc}})">BC {{ $node_1222_bc }}</a>
                                                       @else
                                                           +

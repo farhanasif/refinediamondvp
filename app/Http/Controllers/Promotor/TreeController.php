@@ -25,62 +25,77 @@ class TreeController extends Controller
         $node_1_user_id = 0;
         $node_1_bc = 0;
         $node_1_mobile = 0;
+        $node_1_name = '';
 
         $node_11_user_id = 0;
         $node_11_bc = 0;
         $node_11_mobile = 0;
+        $node_11_name = '';
 
         $node_111_user_id = 0;
         $node_111_bc = 0;
         $node_111_mobile = 0;
+        $node_111_name = '';
 
         $node_112_user_id = 0;
         $node_112_bc = 0;
         $node_112_mobile = 0;
+        $node_112_name = '';
 
         $node_1111_user_id = 0;
         $node_1111_bc = 0;
         $node_1111_mobile = 0;
+        $node_1111_name = '';
 
         $node_1112_user_id = 0;
         $node_1112_bc = 0;
         $node_1112_mobile = 0;
+        $node_1112_name = '';
 
         $node_1121_user_id = 0;
         $node_1121_bc = 0;
         $node_1121_mobile = 0;
+        $node_1121_name = '';
 
         $node_1122_user_id = 0;
         $node_1122_bc = 0;
         $node_1122_mobile = 0;
+        $node_1122_name = '';
 
         $node_12_user_id = 0;
         $node_12_bc = 0;
         $node_12_mobile = 0;
+        $node_12_name = '';
 
         $node_121_user_id = 0;
         $node_121_bc = 0;
         $node_121_mobile = 0;
+        $node_121_name = '';
 
         $node_122_user_id = 0;
         $node_122_bc = 0;
         $node_122_mobile = 0;
+        $node_122_name = '';
 
         $node_1211_user_id = 0;
         $node_1211_bc = 0;
         $node_1211_mobile = 0;
+        $node_1211_name = '';
 
         $node_1212_user_id = 0;
         $node_1212_bc = 0;
         $node_1212_mobile = 0;
+        $node_1212_name = '';
 
         $node_1221_user_id = 0;
         $node_1221_bc = 0;
         $node_1221_mobile = 0;
+        $node_1221_name = '';
 
         $node_1222_user_id = 0;
         $node_1222_bc = 0;
         $node_1222_mobile = 0;
+        $node_1222_name = '';
 
         if(!isset($id) || $id < 1){
             $id = $auth_id;
@@ -99,7 +114,7 @@ class TreeController extends Controller
             // $root = SponsorTree::where('user_id', $id)
             //     ->where('bc', 1)
             //     ->first();
-            //DB::connection()->enableQueryLog();
+            DB::connection()->enableQueryLog();
 
             $root = DB::table('sponsor_tree as st')
                 ->join('users as u', 'u.id','=', 'st.user_id')
@@ -108,13 +123,14 @@ class TreeController extends Controller
                 ->where('st.bc', $bc)
                 ->first();
 
-            //$queries = DB::getQueryLog();
+            $queries = DB::getQueryLog();
 
             //dd($queries); exit();
 
             $node_1_user_id = $root->user_id;
             $node_1_bc = $root->bc;
             $node_1_mobile = $root->mobile;
+            $node_1_name = $root->name;
 
 
 
@@ -122,6 +138,7 @@ class TreeController extends Controller
             //check if root has left and right, node 1
             $tree_left = $root->left;
             $tree_right = $root->right;
+            //dd($tree_right);exit();
 
             if($tree_left == 0){
             }
@@ -131,6 +148,7 @@ class TreeController extends Controller
                 $node_11_user_id = $root_left->user_id;
                 $node_11_bc = $root_left->bc;
                 $node_11_mobile = $root_left->mobile;
+                $node_11_name = $root_left->name;
 
                 //dd($root_left);
                 $tree_11_left = $root_left->left;
@@ -146,7 +164,7 @@ class TreeController extends Controller
                     $node_111_user_id = $root_left->user_id;
                     $node_111_bc = $root_left->bc;
                     $node_111_mobile = $root_left->mobile;
-
+                    $node_111_name = $root_left->name;
 
                     $tree_111_left = $root_left->left;
                     $tree_111_right = $root_left->right;
@@ -158,6 +176,7 @@ class TreeController extends Controller
                         $node_1111_user_id = $root_left->user_id;
                         $node_1111_bc = $root_left->bc;
                         $node_1111_mobile = $root_left->mobile;
+                        $node_1111_name = $root_left->name;
                     }
 
                     if($tree_111_right == 0){}
@@ -167,6 +186,7 @@ class TreeController extends Controller
                         $node_1112_user_id = $root_left->user_id;
                         $node_1112_bc = $root_left->bc;
                         $node_1112_mobile = $root_left->mobile;
+                        $node_1112_name = $root_left->name;
                     }
                 }
 
@@ -177,6 +197,7 @@ class TreeController extends Controller
                     $node_112_user_id = $root_right->user_id;
                     $node_112_bc = $root_right->bc;
                     $node_112_mobile = $root_right->mobile;
+                    $node_112_name = $root_right->name;
                     //dd($root_right);
 
                     $tree_112_left = $root_right->left;
@@ -189,6 +210,7 @@ class TreeController extends Controller
                         $node_1121_user_id = $root_left->user_id;
                         $node_1121_bc = $root_left->bc;
                         $node_1121_mobile = $root_left->mobile;
+                        $node_1121_name = $root_left->name;
                     }
 
                     if($tree_112_right == 0){}
@@ -199,6 +221,7 @@ class TreeController extends Controller
                         $node_1122_user_id = $root_left->user_id;
                         $node_1122_bc = $root_left->bc;
                         $node_1122_mobile = $root_left->mobile;
+                        $node_1122_name = $root_left->name;
                     }
 
                 }
@@ -207,10 +230,12 @@ class TreeController extends Controller
             if($tree_right == 0){}
             else{
                 //get left tree details
+                //dd($tree_right);exit();
                 $root_right = $this->getTreeDetails($tree_right);
                 $node_12_user_id = $root_right->user_id;
                 $node_12_bc = $root_right->bc;
                 $node_12_mobile = $root_right->mobile;
+                $node_12_name = $root_right->name;
                 //dd($root_right);
                 $tree_12_left = $root_right->left;
                 $tree_12_right = $root_right->right;
@@ -224,7 +249,7 @@ class TreeController extends Controller
                     $node_121_user_id = $root_left->user_id;
                     $node_121_bc = $root_left->bc;
                     $node_121_mobile = $root_left->mobile;
-
+                    $node_121_name = $root_left->name;
 
                     $tree_121_left = $root_left->left;
                     $tree_121_right = $root_left->right;
@@ -236,6 +261,7 @@ class TreeController extends Controller
                         $node_1211_user_id = $root_left->user_id;
                         $node_1211_bc = $root_left->bc;
                         $node_1211_mobile = $root_left->mobile;
+                        $node_1211_name = $root_left->name;
                     }
 
                     if($tree_121_right == 0){}
@@ -245,6 +271,7 @@ class TreeController extends Controller
                         $node_1212_user_id = $root_left->user_id;
                         $node_1212_bc = $root_left->bc;
                         $node_1212_mobile = $root_left->mobile;
+                        $node_1212_name = $root_left->name;
                     }
                 }
 
@@ -255,6 +282,7 @@ class TreeController extends Controller
                     $node_122_user_id = $root_right->user_id;
                     $node_122_bc = $root_right->bc;
                     $node_122_mobile = $root_right->mobile;
+                    $node_122_name = $root_right->name;
                     //dd($root_right);
 
                     $tree_122_left = $root_right->left;
@@ -267,6 +295,7 @@ class TreeController extends Controller
                         $node_1221_user_id = $root_left->user_id;
                         $node_1221_bc = $root_left->bc;
                         $node_1221_mobile = $root_left->mobile;
+                        $node_1221_name = $root_left->name;
                     }
 
                     if($tree_122_right == 0){}
@@ -276,6 +305,7 @@ class TreeController extends Controller
                         $node_1222_user_id = $root_left->user_id;
                         $node_1222_bc = $root_left->bc;
                         $node_1222_mobile = $root_left->mobile;
+                        $node_1222_name = $root_left->name;
                     }
 
                 }
@@ -285,67 +315,67 @@ class TreeController extends Controller
             //return view('promotor.tree');
         }
 
-        $response = [
-            'node_1_user_id' => $node_1_user_id,
-            'node_1_bc' => $node_1_bc,
-            'node_1_mobile' => $node_1_mobile,
+        // $response = [
+        //     'node_1_user_id' => $node_1_user_id,
+        //     'node_1_bc' => $node_1_bc,
+        //     'node_1_mobile' => $node_1_mobile,
 
-            'node_11_user_id' => $node_11_user_id,
-            'node_11_bc' => $node_11_bc,
-            'node_11_mobile' => $node_11_mobile,
+        //     'node_11_user_id' => $node_11_user_id,
+        //     'node_11_bc' => $node_11_bc,
+        //     'node_11_mobile' => $node_11_mobile,
 
-            'node_111_user_id' => $node_111_user_id,
-            'node_111_bc' => $node_111_bc,
-            'node_111_mobile' => $node_111_mobile,
+        //     'node_111_user_id' => $node_111_user_id,
+        //     'node_111_bc' => $node_111_bc,
+        //     'node_111_mobile' => $node_111_mobile,
 
-            'node_112_user_id' => $node_112_user_id,
-            'node_112_bc' => $node_112_bc,
-            'node_112_mobile' => $node_112_mobile,
+        //     'node_112_user_id' => $node_112_user_id,
+        //     'node_112_bc' => $node_112_bc,
+        //     'node_112_mobile' => $node_112_mobile,
 
-            'node_1111_user_id' => $node_1111_user_id,
-            'node_1111_bc' => $node_1111_bc,
-            'node_1111_mobile' => $node_1111_mobile,
+        //     'node_1111_user_id' => $node_1111_user_id,
+        //     'node_1111_bc' => $node_1111_bc,
+        //     'node_1111_mobile' => $node_1111_mobile,
 
-            'node_1112_user_id' => $node_1112_user_id,
-            'node_1112_bc' => $node_1112_bc,
-            'node_1112_mobile' => $node_1112_mobile,
+        //     'node_1112_user_id' => $node_1112_user_id,
+        //     'node_1112_bc' => $node_1112_bc,
+        //     'node_1112_mobile' => $node_1112_mobile,
 
-            'node_1121_user_id' => $node_1121_user_id,
-            'node_1121_bc' => $node_1121_bc,
-            'node_1121_mobile' => $node_1121_mobile,
+        //     'node_1121_user_id' => $node_1121_user_id,
+        //     'node_1121_bc' => $node_1121_bc,
+        //     'node_1121_mobile' => $node_1121_mobile,
 
-            'node_1122_user_id' => $node_1122_user_id,
-            'node_1122_bc' => $node_1122_bc,
-            'node_1122_mobile' => $node_1122_mobile,
+        //     'node_1122_user_id' => $node_1122_user_id,
+        //     'node_1122_bc' => $node_1122_bc,
+        //     'node_1122_mobile' => $node_1122_mobile,
 
-            'node_12_user_id' => $node_12_user_id,
-            'node_12_bc' => $node_12_bc,
-            'node_12_mobile' => $node_12_mobile,
+        //     'node_12_user_id' => $node_12_user_id,
+        //     'node_12_bc' => $node_12_bc,
+        //     'node_12_mobile' => $node_12_mobile,
 
-            'node_121_user_id' => $node_121_user_id,
-            'node_121_bc' => $node_121_bc,
-            'node_121_mobile' => $node_121_mobile,
+        //     'node_121_user_id' => $node_121_user_id,
+        //     'node_121_bc' => $node_121_bc,
+        //     'node_121_mobile' => $node_121_mobile,
 
-            'node_122_user_id' => $node_122_user_id,
-            'node_122_bc' => $node_122_bc,
-            'node_122_mobile' => $node_122_mobile,
+        //     'node_122_user_id' => $node_122_user_id,
+        //     'node_122_bc' => $node_122_bc,
+        //     'node_122_mobile' => $node_122_mobile,
 
-            'node_1211_user_id' => $node_1211_user_id,
-            'node_1211_bc' => $node_1211_bc,
-            'node_1211_mobile' => $node_1211_mobile,
+        //     'node_1211_user_id' => $node_1211_user_id,
+        //     'node_1211_bc' => $node_1211_bc,
+        //     'node_1211_mobile' => $node_1211_mobile,
 
-            'node_1212_user_id' => $node_1212_user_id,
-            'node_1212_bc' => $node_1212_bc,
-            'node_1212_mobile' => $node_1212_mobile,
+        //     'node_1212_user_id' => $node_1212_user_id,
+        //     'node_1212_bc' => $node_1212_bc,
+        //     'node_1212_mobile' => $node_1212_mobile,
 
-            'node_1221_user_id' => $node_1221_user_id,
-            'node_1221_bc' => $node_1221_bc,
-            'node_1221_mobile' => $node_1221_mobile,
+        //     'node_1221_user_id' => $node_1221_user_id,
+        //     'node_1221_bc' => $node_1221_bc,
+        //     'node_1221_mobile' => $node_1221_mobile,
 
-            'node_1222_user_id' => $node_1222_user_id,
-            'node_1222_bc' => $node_1222_bc,
-            'node_1222_mobile' => $node_1222_mobile
-        ];
+        //     'node_1222_user_id' => $node_1222_user_id,
+        //     'node_1222_bc' => $node_1222_bc,
+        //     'node_1222_mobile' => $node_1222_mobile
+        // ];
 
         //dd($response);exit();
 
@@ -353,62 +383,77 @@ class TreeController extends Controller
             'node_1_user_id' => $node_1_user_id,
             'node_1_bc' => $node_1_bc,
             'node_1_mobile' => $node_1_mobile,
+            'node_1_name' => $node_1_name,
 
             'node_11_user_id' => $node_11_user_id,
             'node_11_bc' => $node_11_bc,
             'node_11_mobile' => $node_11_mobile,
+            'node_11_name' => $node_11_name,
 
             'node_111_user_id' => $node_111_user_id,
             'node_111_bc' => $node_111_bc,
             'node_111_mobile' => $node_111_mobile,
+            'node_111_name' => $node_111_name,
 
             'node_112_user_id' => $node_112_user_id,
             'node_112_bc' => $node_112_bc,
             'node_112_mobile' => $node_112_mobile,
+            'node_112_name' => $node_112_name,
 
             'node_1111_user_id' => $node_1111_user_id,
             'node_1111_bc' => $node_1111_bc,
             'node_1111_mobile' => $node_1111_mobile,
+            'node_1111_name' => $node_1111_name,
 
             'node_1112_user_id' => $node_1112_user_id,
             'node_1112_bc' => $node_1112_bc,
             'node_1112_mobile' => $node_1112_mobile,
+            'node_1112_name' => $node_1112_name,
 
             'node_1121_user_id' => $node_1121_user_id,
             'node_1121_bc' => $node_1121_bc,
             'node_1121_mobile' => $node_1121_mobile,
+            'node_1121_name' => $node_1121_name,
 
             'node_1122_user_id' => $node_1122_user_id,
             'node_1122_bc' => $node_1122_bc,
             'node_1122_mobile' => $node_1122_mobile,
+            'node_1122_name' => $node_1122_name,
 
             'node_12_user_id' => $node_12_user_id,
             'node_12_bc' => $node_12_bc,
             'node_12_mobile' => $node_12_mobile,
+            'node_12_name' => $node_12_name,
 
             'node_121_user_id' => $node_121_user_id,
             'node_121_bc' => $node_121_bc,
             'node_121_mobile' => $node_121_mobile,
+            'node_121_name' => $node_121_name,
 
             'node_122_user_id' => $node_122_user_id,
             'node_122_bc' => $node_122_bc,
             'node_122_mobile' => $node_122_mobile,
+            'node_122_name' => $node_122_name,
 
             'node_1211_user_id' => $node_1211_user_id,
             'node_1211_bc' => $node_1211_bc,
             'node_1211_mobile' => $node_1211_mobile,
+            'node_1211_name' => $node_1211_name,
 
             'node_1212_user_id' => $node_1212_user_id,
             'node_1212_bc' => $node_1212_bc,
             'node_1212_mobile' => $node_1212_mobile,
+            'node_1212_name' => $node_1212_name,
 
             'node_1221_user_id' => $node_1221_user_id,
             'node_1221_bc' => $node_1221_bc,
             'node_1221_mobile' => $node_1221_mobile,
+            'node_1221_name' => $node_1221_name,
 
             'node_1222_user_id' => $node_1222_user_id,
             'node_1222_bc' => $node_1222_bc,
-            'node_1222_mobile' => $node_1222_mobile
+            'node_1222_mobile' => $node_1222_mobile,
+            'node_1222_name' => $node_1222_name,
         ]);
 
     }
@@ -941,6 +986,8 @@ class TreeController extends Controller
         $mr = $request->input('mr');
         $mr_amount = $request->input('mr_amount');
 
+        $rdl_money_receipt = $request->input('rdl_money_receipt');
+
         //dd($mr);exit();
         //FIRST CHECK MONEY RECEIPT IS VALID OR NOT
         $check_mr_query = "select * from recovery_users_money_receipt where money_receipt in (";
@@ -972,7 +1019,7 @@ class TreeController extends Controller
             else{
                 //check sponsor
                 $user = DB::select("select u.id, u.name from users u inner join sponsor_tree st on u.id = st.user_id and u.mobile = '".$sponsor_mobile."' limit 1");
-                
+
                 if($user){
                     $sponsor_id = $user[0]->id;
                     //check placement validity
@@ -1014,7 +1061,7 @@ class TreeController extends Controller
                                     on u.id = T2.user_id
                                     ORDER BY T1.lvl desc
                                 ");
-                                
+
                                 //dd($topline);exit();
 
                                 if($topline){
@@ -1155,7 +1202,8 @@ class TreeController extends Controller
                                                 'emergency_contact' => $emergency_contact,
                                                 'created_at' => date('Y-m-d h:i:s'),
                                                 'updated_at' => date('Y-m-d h:i:s'),
-                                                'user_id' => $id
+                                                'user_id' => $id,
+                                                'rdl_money_receipt' => $rdl_money_receipt
                                             ]
                                         );
 
@@ -1253,6 +1301,8 @@ class TreeController extends Controller
         $mr = $request->input('mr');
         $mr_amount = $request->input('mr_amount');
 
+        $rdl_money_receipt = $request->input('rdl_money_receipt');
+
         //dd($mr);exit();
         //FIRST CHECK MONEY RECEIPT IS VALID OR NOT
         $check_mr_query = "select * from recovery_users_money_receipt where money_receipt in (";
@@ -1301,7 +1351,8 @@ class TreeController extends Controller
                             'emergency_contact' => $emergency_contact,
                             'created_at' => date('Y-m-d h:i:s'),
                             'updated_at' => date('Y-m-d h:i:s'),
-                            'user_id' => $user[0]->id
+                            'user_id' => $user[0]->id,
+                            'rdl_money_receipt' => $rdl_money_receipt
                         ]
                     );
 

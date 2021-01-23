@@ -47,6 +47,7 @@
                                     <th>BC</th>
                                     <th>Money Receipt</th>
                                     <th>Amount</th>
+                                    <th>RDLMR</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,6 +72,7 @@
                                         <td>1</td>
                                         <td>{{$result->money_receipt}}</td>
                                         <td>{{$result->amount}}</td>
+                                        <td>{{$result->rdl_money_receipt}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

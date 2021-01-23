@@ -269,6 +269,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                    <!-- text input -->
+                                        <div class="form-group">
+                                            <label>RDL Money Receipt</label>
+                                            <input type="text" class="form-control" id="rdl_money_receipt">
+                                        </div>
+                                    </div>
+
+                                </div>
                                 <br />
                                 <div class="form-row align-items-center">
                                     <div class="col-md-4 mb-3">
@@ -444,6 +454,7 @@
             var team_lead = $('#team_lead').val();
             var mr = money_receipt;
             var mr_amount = money_receipt_amount;
+            var rdl_money_receipt = $('#rdl_money_receipt').val();
 
             if(full_name == ''
                 || mobile == ''
@@ -482,12 +493,12 @@
                         url: './savenewpromoterforrecovery',
                         data: {
                             sponsor_mobile: sponsor_mobile,
-		            sponsor_bc: sponsor_bc,
-		            placement: placement,
-		            placement_bc: placement_bc,
-		            position: position,
-		            package: package,
-		            product: product,
+                            sponsor_bc: sponsor_bc,
+                            placement: placement,
+                            placement_bc: placement_bc,
+                            position: position,
+                            package: package,
+                            product: product,
                             trans_password: trans_password,
 
                             full_name: full_name,
@@ -507,6 +518,7 @@
                             team_lead: team_lead,
                             mr: mr,
                             mr_amount: mr_amount,
+                            rdl_money_receipt: rdl_money_receipt
                         },
                         dataType: 'text',
                         success: function (data) {
@@ -575,6 +587,7 @@
                             team_lead: team_lead,
                             mr: mr,
                             mr_amount: mr_amount,
+                            rdl_money_receipt: rdl_money_receipt
                         },
                         dataType: 'text',
                         success: function (data) {
