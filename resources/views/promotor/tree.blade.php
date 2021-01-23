@@ -27,12 +27,12 @@
 
   .tf-custom .tf-nc:before,
   .tf-custom .tf-nc:after {
-    border-left-color:  #282827 ;
+    border-left-color:  #007AFD;
     border-left-width: 2px;
   }
 
   .tf-custom li li:before {
-    border-top-color:  #282827 ;
+    border-top-color:  #007AFD;
     border-top-width: 2px;
   }
 
