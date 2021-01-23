@@ -27,73 +27,73 @@
 
   .tf-custom .tf-nc:before,
   .tf-custom .tf-nc:after {
-    border-left-color: gold;
+    border-left-color:  #282827 ;
     border-left-width: 2px;
   }
 
   .tf-custom li li:before {
-    border-top-color: gold;
+    border-top-color:  #282827 ;
     border-top-width: 2px;
   }
 
     .tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
     }
 
     .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: transparent;
-    color: #000;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    alignItems: 'center';
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
+        visibility: hidden;
+        width: 200px;
+        background-color: transparent;
+        color: #000;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        alignItems: 'center';
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
     }
 
     .tooltip:hover .tooltiptext {
-    visibility: visible;
+        visibility: visible;
     }
 
     table, th, td {
-    border: 1px solid #A2A1A2;
-    padding-left: 2px;
-    background-color: #dae5e5;
+        border: 1px solid #A2A1A2;
+        padding-left: 2px;
+        background-color: #dae5e5;
     }
 
     .tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
     }
 
     .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: transparent;
-    color: #000;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    alignItems: 'center';
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
+        visibility: hidden;
+        width: 200px;
+        background-color: transparent;
+        color: #000;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        alignItems: 'center';
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
     }
 
     .tooltip:hover .tooltiptext {
-    visibility: visible;
+        visibility: visible;
     }
 
     table, th, td {
-    border: 1px solid #A2A1A2;
-    padding-left: 2px;
-    background-color: #dae5e5;
+        border: 1px solid #A2A1A2;
+        padding-left: 2px;
+        background-color: #dae5e5;
     }
 </style>
 
@@ -138,7 +138,8 @@
                     <div class="tf-tree tf-custom">
                         <ul>
                             <li>
-                                <span class="tf-nc elevation-3 text-center">
+                                <span class="tf-nc elevation-3 text-center"
+                                style="{{ $node_1_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                   @if($node_1_user_id > 0)
                                     <a href="{{ url('/promotor/tree/'.$node_1_user_id.'/'.$node_1_bc) }}">
                                         <img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
@@ -160,7 +161,7 @@
                                 </span>
                                 <ul>
                                     <li>
-                                        <span class="tf-nc elevation-3 text-center">
+                                        <span class="tf-nc elevation-3 text-center" style="{{ $node_11_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                           @if($node_11_user_id > 0)
                                           <a href="{{ url('/promotor/tree/'.$node_11_user_id.'/'.$node_11_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -173,7 +174,7 @@
                                         </span>
                                         <ul>
                                             <li>
-                                              <span class="tf-nc  elevation-3 text-center">
+                                              <span class="tf-nc  elevation-3 text-center" style="{{ $node_111_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}" >
                                                 @if($node_111_user_id > 0)
                                                 <a href="{{ url('/promotor/tree/'.$node_111_user_id.'/'.$node_111_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -185,7 +186,7 @@
                                                 @endif
                                               </span>
                                                 <ul>
-                                                    <li><span class="tf-nc elevation-3 text-center">
+                                                    <li><span class="tf-nc elevation-3 text-center" style="{{ $node_1111_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                       @if($node_1111_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1111_user_id.'/'.$node_1111_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -196,7 +197,7 @@
                                                           +
                                                       @endif
                                                     </span></li>
-                                                    <li><span class="tf-nc elevation-3 text-center">
+                                                    <li><span class="tf-nc elevation-3 text-center" style="{{ $node_1112_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                       @if($node_1112_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1112_user_id.'/'.$node_1112_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -210,7 +211,7 @@
                                                 </ul>
                                             </li>
                                             <li>
-                                                <span class="tf-nc elevation-3 text-center">
+                                                <span class="tf-nc elevation-3 text-center" style="{{ $node_112_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                   @if($node_112_user_id > 0)
                                                   <a href="{{ url('/promotor/tree/'.$node_112_user_id.'/'.$node_112_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -222,7 +223,7 @@
                                                   @endif
                                                 </span>
                                                 <ul>
-                                                    <li><span class="tf-nc elevation-3 text-center">
+                                                    <li><span class="tf-nc elevation-3 text-center" style="{{ $node_1121_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                       @if($node_1121_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1121_user_id.'/'.$node_1121_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                                                         style="opacity: .8"></a><br/>
@@ -233,7 +234,7 @@
                                                           +
                                                       @endif
                                                     </span></li>
-                                                    <li><span class="tf-nc elevation-3 text-center">
+                                                    <li><span class="tf-nc elevation-3 text-center" style="{{ $node_1122_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                       @if($node_1122_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1122_user_id.'/'.$node_1122_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -249,7 +250,7 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <span class="tf-nc elevation-3 text-center">
+                                        <span class="tf-nc elevation-3 text-center" style="{{ $node_12_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                           @if($node_12_user_id > 0)
                                           <a href="{{ url('/promotor/tree/'.$node_12_user_id.'/'.$node_12_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -261,7 +262,7 @@
                                           @endif
                                         </span>
                                         <ul>
-                                            <li><span class="tf-nc elevation-3 text-center">
+                                            <li><span class="tf-nc elevation-3 text-center" style="{{ $node_121_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                               @if($node_121_user_id > 0)
                                               <a href="{{ url('/promotor/tree/'.$node_121_user_id.'/'.$node_121_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -273,7 +274,7 @@
                                               @endif
                                             </span>
                                                 <ul>
-                                                    <li><span class="tf-nc elevation-3 text-center">
+                                                    <li><span class="tf-nc elevation-3 text-center" style="{{ $node_1211_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                       @if($node_1211_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1211_user_id.'/'.$node_1211_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -284,7 +285,7 @@
                                                           +
                                                       @endif
                                                     </span></li>
-                                                    <li><span class="tf-nc elevation-3 text-center">
+                                                    <li><span class="tf-nc elevation-3 text-center" style="{{ $node_1212_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                       @if($node_1212_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1212_user_id.'/'.$node_1212_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -297,7 +298,7 @@
                                                     </span></li>
                                                 </ul>
                                             </li>
-                                            <li><span class="tf-nc elevation-3 text-center">
+                                            <li><span class="tf-nc elevation-3 text-center" style="{{ $node_122_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                 @if($node_122_user_id > 0)
                                                 <a href="{{ url('/promotor/tree/'.$node_122_user_id.'/'.$node_122_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -309,7 +310,7 @@
                                                 @endif
                                               </span>
                                                 <ul>
-                                                    <li><span class="tf-nc elevation-3 text-center">
+                                                    <li><span class="tf-nc elevation-3 text-center" style="{{ $node_1221_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                       @if($node_1221_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1221_user_id.'/'.$node_1221_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
@@ -320,7 +321,7 @@
                                                           +
                                                       @endif
                                                     </span></li>
-                                                    <li><span class="tf-nc elevation-3 text-center">
+                                                    <li><span class="tf-nc elevation-3 text-center" style="{{ $node_1222_package == '2000' ? 'background-color:  #E5E4E2 !important; border-color:  #E5E4E2 !important;' : ''}}">
                                                       @if($node_1222_user_id > 0)
                                                       <a href="{{ url('/promotor/tree/'.$node_1222_user_id.'/'.$node_1222_bc) }}"><img src="{{asset('images/person-icon.png')}}" alt="User Image" class="brand-image img-circle elevation-3"
                     style="opacity: .8"></a><br/>
