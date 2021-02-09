@@ -15,7 +15,7 @@
               <img src="{{asset('assets/admin/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"> {{ Auth::user()->role }} </a>
+              <a href="#" class="d-block"> {{ Auth::user()->is_panel_user }} </a>
             </div>
           </div>
 
@@ -150,6 +150,26 @@
                 </ul>
               </li>
 
+              @if(Auth::user()->is_panel_user == 'yes')
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link active">
+                  <i class="fas fa-dove"></i>
+                  <p>
+                    Investor Panel
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{route('promotor.investment')}}" class="nav-link">
+                      <i class="far fa-gem nav-icon text-pink"></i>
+                      <p>Invetment Home</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              @endif
+
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                   <i class="fas fa-shopping-cart"></i>
@@ -172,7 +192,6 @@
                       <p>Product Purchage & Point Report</p>
                     </a>
                   </li>
-
                 </ul>
               </li>
 

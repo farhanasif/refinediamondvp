@@ -91,8 +91,8 @@ Route::post('/promotor/autosavenewpromoterforrecovery','Promotor\TreeController@
 Route::get('/promotor/recoveryview','Promotor\TreeController@recoveryview')->name('promotor.recoveryview');
 
 
-
-
+/////----Investment ---------//////
+Route::get('/promotor/investment','Promotor\InvestmentController@index')->name('promotor.investment');
 
 
 
