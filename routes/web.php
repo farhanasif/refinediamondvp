@@ -93,8 +93,10 @@ Route::get('/promotor/recoveryview','Promotor\TreeController@recoveryview')->nam
 
 /////----Investment ---------//////
 Route::get('/promotor/investment','Promotor\InvestmentController@index')->name('promotor.investment');
-
-
+Route::get('/promotor/investment-details','Promotor\InvestmentController@details')->name('promotor.investment-details');
+Route::get('/promotor/investment-entry','Promotor\InvestmentController@entry')->name('promotor.investment-entry');
+Route::post('/promotor/savenewpanel', 'Promotor\InvestmentController@savenewpanel')->name('promotor.savenewpanel');
+Route::post('/promotor/removepanel', 'Promotor\InvestmentController@removepanel')->name('promotor.removepanel');
 
 
 

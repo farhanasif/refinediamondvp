@@ -29,7 +29,7 @@
               <div class="icon">
                 <i class="ion ion-person"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('promotor.investment-details')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -44,7 +44,7 @@
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('promotor.investment-details')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -59,7 +59,7 @@
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('promotor.investment-details')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -74,7 +74,7 @@
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('promotor.investment-details')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -82,14 +82,23 @@
         <!-- /.row -->
     <div class="card card-default">
 
-      <div class="card-header">
-        <h3 class="card-title">Investment & Share Panel</h3>
-      </div>
+
       <!-- /.card-header -->
       <div class="card-body">
             <div class="row">
-                <div class="col-3">
-                    <button type="button" class="btn btn-block bg-gradient-primary">Add a new panel user</button>
+                <div class="col-6">
+                    <a href="{{route('promotor.investment-entry')}}" type="button" class="btn btn-block bg-gradient-primary">Add a new panel user</a>
+                </div>
+                <div class="col-6">
+                    <a href="" type="button" class="btn btn-block bg-gradient-success">Add a demand request</a>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6">
+                    <a href="" type="button" class="btn btn-block bg-gradient-danger">View all demand request</a>
+                </div>
+                <div class="col-6">
+                    <a href="" type="button" class="btn btn-block bg-gradient-warning">Place an investment user</a>
                 </div>
             </div>
       </div>
