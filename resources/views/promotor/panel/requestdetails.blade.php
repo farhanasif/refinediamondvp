@@ -9,7 +9,7 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Panel User Details</h3>
+            <h3 class="card-title">Demand Details</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -20,39 +20,76 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card card-outline card-warning">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                        @foreach ($results as $result)
+                            <div class="col-md-12">
+                                <div class="card card-success">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{$result->category}}</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    {{$result->description}}
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-2 pt-3">
+                                        <a href="#" type="button" class="btn btn-block btn-outline-primary btn-sm">Details</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        @endforeach
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-outline card-warning">
                         <div class="card-header">
-                            <h3 class="card-title">Panel Users</h3>
+                            <h3 class="card-title">চাহিদা গ্রহণকারীর তালিকা</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+
                         <table class="table table-sm table-bordered table-striped dataTable dtr-inline" id="example1" role="grid" aria-describedby="example1_info">
                             <thead>
                                 <tr>
                                     <th>SL</th>
                                     <th>Name</th>
                                     <th>Mobile</th>
-                                    <th>Panel Type</th>
+                                    <th>Amount</th>
                                     <th>Created At</th>
-                                    <th>Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($results as $result)
+                                @foreach ($receives as $receive)
                                     <tr>
                                         <td class="table-active"><b>#</b></td>
-                                        <td><b>{{$result->name}}</b></td>
-                                        <td>{{$result->mobile}}</td>
-                                        <td>{{$result->status}}</td>
-                                        <td>{{$result->created_at}}</td>
-                                        <td>
-                                            @if($result->mobile !== '01925995556')
-                                            <button class="btn btn-warning btn-xs" onclick="remove('{{$result->mobile}}')">Remove</button>
-                                            @endif
-                                        </td>
+                                        <td><b>{{$receive->name}}</b></td>
+                                        <td>{{$receive->mobile}}</td>
+                                        <td>{{$receive->amount}} {{$receive->category == 'RDL প্রোপারটিজ' ? 'শতাংশ':'টি' }}</td>
+                                        <td>{{$receive->created_at}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                             </table>
+
                         </div>
                         <!-- /.card-body -->
                     </div>

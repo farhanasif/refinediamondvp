@@ -166,6 +166,12 @@
                       <p>Invetment Home</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="{{route('promotor.investment')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>Investment Report</p>
+                    </a>
+                  </li>
                 </ul>
               </li>
               @endif

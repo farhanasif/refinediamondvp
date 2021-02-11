@@ -23,7 +23,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>1</h3>
+                <h3>{{ $results[0]->king }}</h3>
                 <p>KING PANEL</p>
               </div>
               <div class="icon">
@@ -37,7 +37,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>0</h3>
+                <h3>{{ $results[0]->prince }}</h3>
 
                 <p>PRINCE PANEL</p>
               </div>
@@ -52,8 +52,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>0</h3>
-
+                <h3>{{ $results[0]->royal }}</h3>
                 <p>ROYAL PANEL</p>
               </div>
               <div class="icon">
@@ -67,7 +66,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>0</h3>
+                <h3>{{ $results[0]->gold }}</h3>
 
                 <p>GOLD PANEL</p>
               </div>
@@ -81,8 +80,6 @@
         </div>
         <!-- /.row -->
     <div class="card card-default">
-
-
       <!-- /.card-header -->
       <div class="card-body">
             <div class="row">
@@ -90,15 +87,43 @@
                     <a href="{{route('promotor.investment-entry')}}" type="button" class="btn btn-block bg-gradient-primary">Add a new panel user</a>
                 </div>
                 <div class="col-6">
+                    @if(Auth::user()->id == 52)
+                    <a href="{{route('promotor.demand')}}" type="button" class="btn btn-block bg-gradient-success">Add a demand request</a>
+                    @else
                     <a href="" type="button" class="btn btn-block bg-gradient-success">Add a demand request</a>
+                    @endif
                 </div>
             </div>
             <div class="row pt-2">
                 <div class="col-6">
-                    <a href="" type="button" class="btn btn-block bg-gradient-danger">View all demand request</a>
+                    <a href="{{route('promotor.drequest')}}" type="button" class="btn btn-block bg-gradient-danger">View all demand request</a>
                 </div>
                 <div class="col-6">
-                    <a href="" type="button" class="btn btn-block bg-gradient-warning">Place an investment user</a>
+                    <a href="{{route('promotor.investment-entry')}}" type="button" class="btn btn-block bg-gradient-warning">Place an investment user</a>
+                </div>
+            </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <div class="card card-default">
+      <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-tag"></i>
+              RDL Investment Links
+            </h3>
+          </div>
+
+      <!-- /.card-header -->
+      <div class="card-body">
+            <div class="row pt-2">
+                <div class="col-4">
+                    <a href="https://rdlgroupbd.com/propertyuser/" type="button" class="btn btn-block bg-gradient-navy" target="_blank">RDL প্রোপারটিজ</a>
+                </div>
+                <div class="col-4">
+                    <a href="https://rdlgroupbd.com/propertyuser/" type="button" class="btn btn-block bg-gradient-orange" target="_blank">RDL কুরিয়ার </a>
+                </div>
+                <div class="col-4">
+                    <a href="https://rdlgroupbd.com/propertyuser/" type="button" class="btn btn-block bg-gradient-indigo" target="_blank">RDL রেন্ট এ কার</a>
                 </div>
             </div>
       </div>

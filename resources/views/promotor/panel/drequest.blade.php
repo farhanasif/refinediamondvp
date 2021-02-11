@@ -9,7 +9,7 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Panel User Details</h3>
+            <h3 class="card-title">All Demand Requests</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -20,39 +20,42 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card card-outline card-warning">
-                        <div class="card-header">
-                            <h3 class="card-title">Panel Users</h3>
-                        </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                        <table class="table table-sm table-bordered table-striped dataTable dtr-inline" id="example1" role="grid" aria-describedby="example1_info">
-                            <thead>
-                                <tr>
-                                    <th>SL</th>
-                                    <th>Name</th>
-                                    <th>Mobile</th>
-                                    <th>Panel Type</th>
-                                    <th>Created At</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($results as $result)
-                                    <tr>
-                                        <td class="table-active"><b>#</b></td>
-                                        <td><b>{{$result->name}}</b></td>
-                                        <td>{{$result->mobile}}</td>
-                                        <td>{{$result->status}}</td>
-                                        <td>{{$result->created_at}}</td>
-                                        <td>
-                                            @if($result->mobile !== '01925995556')
-                                            <button class="btn btn-warning btn-xs" onclick="remove('{{$result->mobile}}')">Remove</button>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                            </table>
+
+                        @foreach ($results as $result)
+                            <div class="col-md-8">
+                                <div class="card card-success">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{$result->category}}</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    {{$result->description}}
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-2 pt-3">
+                                        @if(Auth::user()->id == 52)
+                                        <a href="{{route('promotor.requestdetails', ['id' => $result->id])}}" type="button" class="btn btn-block btn-outline-primary btn-sm">Details</a>
+                                        @else
+                                        <a href="{{route('promotor.requestupdate', ['id' => $result->id])}}" type="button" class="btn btn-block btn-outline-primary btn-sm">Submit</a>
+                                        @endif
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        @endforeach
+
                         </div>
                         <!-- /.card-body -->
                     </div>

@@ -97,6 +97,12 @@ Route::get('/promotor/investment-details','Promotor\InvestmentController@details
 Route::get('/promotor/investment-entry','Promotor\InvestmentController@entry')->name('promotor.investment-entry');
 Route::post('/promotor/savenewpanel', 'Promotor\InvestmentController@savenewpanel')->name('promotor.savenewpanel');
 Route::post('/promotor/removepanel', 'Promotor\InvestmentController@removepanel')->name('promotor.removepanel');
+Route::get('/promotor/demand','Promotor\InvestmentController@demand')->name('promotor.demand');
+Route::post('/promotor/savedemand', 'Promotor\InvestmentController@savedemand')->name('promotor.savedemand');
+Route::get('/promotor/drequest','Promotor\InvestmentController@drequest')->name('promotor.drequest');
+Route::get('/promotor/requestdetails/{id}','Promotor\InvestmentController@requestdetails')->name('promotor.requestdetails');
+Route::get('/promotor/requestupdate/{id}','Promotor\InvestmentController@requestupdate')->name('promotor.requestupdate');
+Route::post('/promotor/savedemandresponse', 'Promotor\InvestmentController@savedemandresponse')->name('promotor.savedemandresponse');
 
 
 

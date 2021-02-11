@@ -25,7 +25,22 @@ class InvestmentController extends Controller
     }
 
     public function index(){
-        return view('promotor.panel.index');
+        $results = DB::select("select
+                    sum(case when pw = '1' then total else 0 end) as king,
+                    sum(case when pw = '2' then total else 0 end) as prince,
+                    sum(case when pw = '3' then total else 0 end) as royal,
+                    sum(case when pw = '4' then total else 0 end) as gold
+                from (
+                select '1' as pw, count(pw) as total from rd_investment_panels where pw = 1
+                union
+                select '2' as pw, count(pw) as total from rd_investment_panels where pw = 2
+                union
+                select '3' as pw, count(pw) as total from rd_investment_panels where pw = 3
+                union
+                select '4' as pw, count(pw) as total from rd_investment_panels where pw = 4
+                ) as t");
+
+        return view('promotor.panel.index', ['results' => $results]);
     }
 
     public function entry(){
@@ -61,7 +76,7 @@ class InvestmentController extends Controller
             if($placement == 'Royal') $pw = 3;
             if($placement == 'Gold') $pw = 4;
 
-            if($pw <= $auth_panel[0]->pw){
+            if($pw !== $auth_panel[0]->pw+1){
                 return 'error,you cannot enter this '. $placement . ' panel user';
             }
             else{
@@ -97,8 +112,6 @@ class InvestmentController extends Controller
 
             return 'error,panel mobile is not valid';
         }
-
-
     }
 
     public function details(){
@@ -109,7 +122,7 @@ class InvestmentController extends Controller
         inner join users u
         on rip.user_id = u.id";
 
-        if($auth_id == 4){}
+        if($auth_id == 52){}
         else{
             $query = $query. " and rip.parent = ".$auth_id;
         }
@@ -133,6 +146,74 @@ class InvestmentController extends Controller
         }
         else{}
 
+    }
+
+    public function demand(){
+        return view('promotor.panel.demand');
+    }
+
+    public function savedemand(Request $request){
+        $demand_type = $request->input('demand_type');
+        $details = $request->input('details');
+
+        $auth_id = Auth::user()->id;
+
+        if($auth_id == 52){
+            DB::table('rd_investment_demands')->insertGetId(
+                [
+                    'mobile' => Auth::user()->mobile,
+                    'description' => $details,
+                    'category' => $demand_type,
+                    'user_id' => $auth_id,
+                    'created_at' => Date('Y-m-d h:i:s'),
+                    'updated_at' => Date('Y-m-d h:i:s')
+                ]
+            );
+
+            return 'success, ok';
+        }
+        else{
+            return 'error, You cannot create demand';
+        }
+    }
+
+    public function drequest(){
+        $results = DB::select('select * from rd_investment_demands order by id desc');
+        return view('promotor.panel.drequest',['results' => $results]);
+    }
+
+    public function requestdetails(){
+        $id=request()->route("id");
+
+        $results = DB::select('select * from rd_investment_demands where id = '.$id);
+        $receives = DB::select('select * from rd_investment_demand_receivers where rdid = '.$id);
+        return view('promotor.panel.requestdetails',['results' => $results, 'receives' => $receives]);
+    }
+
+    public function requestupdate(){
+        $id=request()->route("id");
+        $results = DB::select('select * from rd_investment_demands where id = '.$id);
+        return view('promotor.panel.requestupdate',['results' => $results]);
+    }
+
+    public function savedemandresponse(Request $request){
+        $amount = $request->input('amount');
+        $rdid = $request->input('rdid');
+
+        DB::table('rd_investment_demand_receivers')->insertGetId(
+            [
+                'mobile' => Auth::user()->mobile,
+                'name' => Auth::user()->name,
+                'amount' => $amount,
+                'rdid' => $rdid,
+                'user_id' => Auth::user()->id,
+                'created_at' => Date('Y-m-d h:i:s'),
+                'updated_at' => Date('Y-m-d h:i:s'),
+                'category' => 'RDL প্রোপারটিজ'
+            ]
+        );
+
+        return 'success, ok';
     }
 
 
