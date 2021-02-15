@@ -15,7 +15,7 @@
               <img src="{{asset('assets/admin/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block"> {{ Auth::user()->is_panel_user }} </a>
+              <a href="#" class="d-block"> {{ Auth::user()->mobile }} </a>
             </div>
           </div>
 
@@ -95,6 +95,7 @@
                 </ul>
               </li>
 
+              @if(Auth::user()->id == 4)
               <li class="nav-item has-treeview">
                 <a href="{{route('promotor.tree')}}" class="nav-link active">
                   <i class="fas fa-users-cog"></i>
@@ -149,6 +150,45 @@
                   </li>
                 </ul>
               </li>
+              @else
+              <li class="nav-item has-treeview">
+                <a href="{{route('promotor.tree')}}" class="nav-link active">
+                  <i class="fas fa-users-cog"></i>
+                  <p>
+                    Team View
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{route('promotor.tree')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>Tree</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>Sponsor Tree</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>Board Tree</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{route('promotor.newentry')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>New Entry</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+              @endif
 
               @if(Auth::user()->is_panel_user == 'yes')
               <li class="nav-item has-treeview">

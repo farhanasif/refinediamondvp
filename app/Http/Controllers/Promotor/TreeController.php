@@ -884,12 +884,18 @@ class TreeController extends Controller
         $user = User::where('mobile', $placement)
                 ->first();
 
+
+
         if($user){
+
             $root = SponsorTree::where('user_id', $user->id)
             ->where('bc', $bc)
             ->first();
 
+
+
             if($root) {
+
                 return response()->json($root);
             }
             else {
