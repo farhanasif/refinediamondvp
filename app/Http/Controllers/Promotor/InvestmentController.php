@@ -25,7 +25,9 @@ class InvestmentController extends Controller
     }
 
     public function index(){
-        $results = DB::select("select
+        $uid = Auth::user()->id;
+        if($uid == 52){
+            $results = DB::select("select
                     sum(case when pw = '1' then total else 0 end) as king,
                     sum(case when pw = '2' then total else 0 end) as prince,
                     sum(case when pw = '3' then total else 0 end) as royal,
@@ -39,6 +41,58 @@ class InvestmentController extends Controller
                 union
                 select '4' as pw, count(pw) as total from rd_investment_panels where pw = 4
                 ) as t");
+        }
+        else{
+            $panel = DB::select('select * from rd_investment_panels where user_id='.$uid);
+            if($panel){
+                $pw = $panel[0]->pw;
+                if($pw == 2){
+                    $p2 = 0;
+                    $p3 = 0;
+                    $p4 = 0;
+                    //for Prince User
+                    $down = DB::select('select * from rd_investment_panels where parent='.$panel[0]->user_id);
+                    if($down){
+                        $i = count($down);
+                        if($i > 0){
+                            $p3 = $i;
+
+                            $where = "(";
+                            for($j = 0; $j < $i; $j++){
+                                $where = $where.$down[$j]->user_id.',';
+                            }
+                            $where = substr($where, 0, -1);
+                            $where = $where.')';
+
+                            $down_gold = DB::select('select * from rd_investment_panels where parent in '.$where);
+                            $k = count($down_gold);
+                            $p4 = $k;
+
+                        }
+
+
+                        $results = DB::select('select 0 as king, 0 as prince, '.$p3.' as royal, '.$p4.' as gold ');
+                    }
+                }
+                else if($pw == 3){
+                    $p2 = 0;
+                    $p3 = 0;
+                    $p4 = 0;
+                    //for Prince User
+                    $down = DB::select('select * from rd_investment_panels where parent='.$panel[0]->user_id);
+                    if($down){
+                        $i = count($down);
+                        $p4 = $i;
+
+                        $results = DB::select('select 0 as king, 0 as prince, 0 as royal, '.$p4.' as gold ');
+                    }
+                }
+                else{
+                    $results = DB::select('select 0 as king, 0 as prince, 0 as royal, 0 as gold ');
+                }
+
+            }
+        }
 
         return view('promotor.panel.index', ['results' => $results]);
     }
@@ -117,10 +171,12 @@ class InvestmentController extends Controller
     public function details(){
         $auth_id = Auth::user()->id;
 
-        $query = "select u.*, rip.*
+        $query = "select u.*, rip.*, u2.mobile as pro
         from rd_investment_panels rip
         inner join users u
-        on rip.user_id = u.id";
+        on rip.user_id = u.id
+        inner join users u2
+        on rip.parent = u2.id";
 
         if($auth_id == 52){}
         else{
@@ -214,6 +270,91 @@ class InvestmentController extends Controller
         );
 
         return 'success, ok';
+    }
+
+    public function investmentreport(){
+
+        $uid = Auth::user()->id;
+
+        $panel = DB::select('select * from rd_investment_panels where user_id='.$uid);
+
+        $query = "select rie.*, u.name, u2.name as investor_name
+        from rd_investment_entries rie
+        inner join users u
+        on u.mobile = rie.panel_holder_mobile
+        left outer join users u2
+        on rie.mobile = u2.mobile
+        inner join rd_investment_panels rip
+        on rie.panel_holder_mobile = rip.mobile ";
+
+        if($panel){
+            $pw = $panel[0]->pw;
+            if($pw < 1){}
+            else{
+                //for p2
+                if($pw == 2){
+                    //for Prince User
+                    $down = DB::select('select * from rd_investment_panels where parent='.$panel[0]->user_id);
+                    if($down){
+                        $i = count($down);
+                        if($i > 0){
+                            $wheremobile = "(";
+                            $where = "(";
+                            for($j = 0; $j < $i; $j++){
+                                $where = $where.$down[$j]->user_id.',';
+                                $wheremobile = $wheremobile."'".$down[$j]->mobile."',";
+                            }
+                            $where = substr($where, 0, -1);
+                            $where = $where.')';
+
+                            $down_gold = DB::select('select * from rd_investment_panels where parent in '.$where);
+
+                            $k = count($down_gold);
+                            if($k>0){
+
+                                for($j = 0; $j < $k; $j++){
+                                    $wheremobile = $wheremobile."'".$down_gold[$j]->mobile."',";
+                                }
+                                $wheremobile = $wheremobile."'".Auth::user()->mobile."')";
+                            }
+
+                            $query = $query." and rie.panel_holder_mobile IN ".$wheremobile;
+                        }
+                    }
+                    else{
+                        $query = $query." and rie.panel_holder_mobile = '".Auth::user()->mobile."'";
+                    }
+                }
+
+                if($pw == 3){
+                    //for Prince User
+                    $down = DB::select('select * from rd_investment_panels where parent='.$panel[0]->user_id);
+                    if($down){
+                        $i = count($down);
+                        if($i > 0){
+                            $wheremobile = "(";
+                            for($j = 0; $j < $i; $j++){
+                                $wheremobile = $wheremobile."'".$down[$j]->mobile."',";
+                            }
+                            $wheremobile = $wheremobile."'".Auth::user()->mobile."')";
+
+                            $query = $query." and rie.panel_holder_mobile IN ".$wheremobile;
+                        }
+                    }
+                    else{
+                        $query = $query." and rie.panel_holder_mobile = '".Auth::user()->mobile."'";
+                    }
+                }
+
+                if($pw == 4){
+                    $query = $query." and rie.panel_holder_mobile = '".Auth::user()->mobile."'";
+                }
+            }
+        }
+
+
+        $results = DB::select($query);
+        return view('promotor.panel.investentry', ['results' => $results]);
     }
 
 

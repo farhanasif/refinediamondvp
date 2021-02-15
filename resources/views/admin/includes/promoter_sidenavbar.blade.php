@@ -155,7 +155,7 @@
                 <a href="#" class="nav-link active">
                   <i class="fas fa-dove"></i>
                   <p>
-                    Investor Panel
+                  Purchase & Service
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
@@ -163,13 +163,13 @@
                   <li class="nav-item">
                     <a href="{{route('promotor.investment')}}" class="nav-link">
                       <i class="far fa-gem nav-icon text-pink"></i>
-                      <p>Invetment Home</p>
+                      <p>Purchase & Service</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{route('promotor.investment')}}" class="nav-link">
+                    <a href="{{route('promotor.investmentreport')}}" class="nav-link">
                       <i class="far fa-circle nav-icon text-pink"></i>
-                      <p>Investment Report</p>
+                      <p>Purchase & Service Report</p>
                     </a>
                   </li>
                 </ul>

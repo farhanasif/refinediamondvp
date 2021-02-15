@@ -103,7 +103,7 @@ Route::get('/promotor/drequest','Promotor\InvestmentController@drequest')->name(
 Route::get('/promotor/requestdetails/{id}','Promotor\InvestmentController@requestdetails')->name('promotor.requestdetails');
 Route::get('/promotor/requestupdate/{id}','Promotor\InvestmentController@requestupdate')->name('promotor.requestupdate');
 Route::post('/promotor/savedemandresponse', 'Promotor\InvestmentController@savedemandresponse')->name('promotor.savedemandresponse');
-
+Route::get('/promotor/investmentreport','Promotor\InvestmentController@investmentreport')->name('promotor.investmentreport');
 
 
 //Product Purchase

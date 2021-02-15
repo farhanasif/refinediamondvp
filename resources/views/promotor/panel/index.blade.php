@@ -8,7 +8,7 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1 class="m-0">Investment & Share Panel</h1>
+        <h1 class="m-0">Purchase & Service Panel</h1>
         </div><!-- /.col -->
     </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -84,11 +84,11 @@
       <div class="card-body">
             <div class="row">
                 <div class="col-6">
-                    <a href="{{route('promotor.investment-entry')}}" type="button" class="btn btn-block bg-gradient-primary">Add a new panel user</a>
+                    <a href="{{route('promotor.investment-entry')}}" type="button" class="btn btn-block bg-gradient-primary">Add a New Panel User</a>
                 </div>
                 <div class="col-6">
                     @if(Auth::user()->id == 52)
-                    <a href="{{route('promotor.demand')}}" type="button" class="btn btn-block bg-gradient-success">Add a demand request</a>
+                    <a href="{{route('promotor.demand')}}" type="button" class="btn btn-block bg-gradient-success">Add a Purchase Demand Request</a>
                     @else
                     <a href="" type="button" class="btn btn-block bg-gradient-success">Add a demand request</a>
                     @endif
@@ -96,10 +96,10 @@
             </div>
             <div class="row pt-2">
                 <div class="col-6">
-                    <a href="{{route('promotor.drequest')}}" type="button" class="btn btn-block bg-gradient-danger">View all demand request</a>
+                    <a href="{{route('promotor.drequest')}}" type="button" class="btn btn-block bg-gradient-danger">View Purchase & Sale Demand Request</a>
                 </div>
                 <div class="col-6">
-                    <a href="{{route('promotor.investment-entry')}}" type="button" class="btn btn-block bg-gradient-warning">Place an investment user</a>
+                    <a href="{{route('promotor.investmentreport')}}" type="button" class="btn btn-block bg-gradient-warning">Place a Seller User</a>
                 </div>
             </div>
       </div>
@@ -109,7 +109,7 @@
       <div class="card-header">
             <h3 class="card-title">
               <i class="fas fa-tag"></i>
-              RDL Investment Links
+              Purchase & Service Links
             </h3>
           </div>
 
@@ -117,13 +117,13 @@
       <div class="card-body">
             <div class="row pt-2">
                 <div class="col-4">
-                    <a href="https://rdlgroupbd.com/propertyuser/" type="button" class="btn btn-block bg-gradient-navy" target="_blank">RDL প্রোপারটিজ</a>
+                    <a href="https://rdlgroupbd.com/propertyuser/" type="button" class="btn btn-block bg-gradient-navy" target="_blank">RDL Properties</a>
                 </div>
                 <div class="col-4">
-                    <a href="https://rdlgroupbd.com/propertyuser/" type="button" class="btn btn-block bg-gradient-orange" target="_blank">RDL কুরিয়ার </a>
+                    <a href="https://rdlgroupbd.com/propertyuser/" type="button" class="btn btn-block bg-gradient-orange" target="_blank">Coming Soon</a>
                 </div>
                 <div class="col-4">
-                    <a href="https://rdlgroupbd.com/propertyuser/" type="button" class="btn btn-block bg-gradient-indigo" target="_blank">RDL রেন্ট এ কার</a>
+                    <a href="https://rdlgroupbd.com/propertyuser/" type="button" class="btn btn-block bg-gradient-indigo" target="_blank">Coming Soon</a>
                 </div>
             </div>
       </div>

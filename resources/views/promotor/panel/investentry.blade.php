@@ -1,5 +1,5 @@
 @extends('admin.admin_master')
-@section('dashobard_title', 'Panel User details')
+@section('dashobard_title', 'Investment User details')
 @section('admin_content')
 <style>
     th.dt-center, td.dt-center { text-align: center !important; }
@@ -9,7 +9,7 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Panel User Details</h3>
+            <h3 class="card-title">Investment User Details</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -21,7 +21,7 @@
                 <div class="col-12">
                     <div class="card card-outline card-warning">
                         <div class="card-header">
-                            <h3 class="card-title">Panel Users</h3>
+                            <h3 class="card-title">Investment Entries</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -30,9 +30,12 @@
                                 <tr>
                                     <th>SL</th>
                                     <th>Name</th>
-                                    <th>Mobile</th>
-                                    <th>Panel Type</th>
-                                    <th>Parent</th>
+                                    <th>Amount</th>
+                                    <th>Point</th>
+                                    <th>NID</th>
+                                    <th>Panel Holder Name</th>
+                                    <th>Panel Holder Mobile</th>
+                                    <th>Service</th>
                                     <th>Created At</th>
                                     <th>Action</th>
                                 </tr>
@@ -41,15 +44,24 @@
                                 @foreach ($results as $result)
                                     <tr>
                                         <td class="table-active"><b>#</b></td>
-                                        <td><b>{{$result->name}}</b></td>
-                                        <td>{{$result->mobile}}</td>
-                                        <td>{{$result->status}}</td>
-                                        <td>{{$result->pro}}</td>
+                                        <td><b>{{$result->seller_name}}</b></td>
+                                        <td>{{$result->total_amount}}</td>
+                                        <td>{{$result->total_point}}</td>
+                                        <td>{{$result->nid}}</td>
+                                        <td>{{$result->name}}</td>
+                                        <td>{{$result->panel_holder_mobile}}</td>
+                                        <td>{{$result->service_name}}</td>
                                         <td>{{$result->created_at}}</td>
                                         <td>
-                                            @if($result->mobile !== '01925995556')
-                                            <button class="btn btn-warning btn-xs" onclick="remove('{{$result->mobile}}')">Remove</button>
+                                        @if(Auth::user()->id == 52)
+                                            @if($result->investor_name == '')
+                                            Entry Not Done
+                                            @else
+                                            Entry Done
                                             @endif
+                                        @else
+
+                                        @endif
                                         </td>
                                     </tr>
                                 @endforeach

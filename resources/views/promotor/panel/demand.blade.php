@@ -27,9 +27,9 @@
                 <div class="form-group">
                     <label>Demand Type</label>
                     <select class="form-control" id="demand_type">
-                        <option value="RDL প্রোপারটিজ">RDL প্রোপারটিজ</option>
-                        <option value="RDL কুরিয়ার">RDL কুরিয়ার</option>
-                        <option value="RDL রেন্ট এ কার">RDL রেন্ট এ কার</option>
+                        <option value="RDL প্রোপারটিজ">RDL Properties</option>
+                        <option value="RDL কুরিয়ার">RDL Courier</option>
+                        <option value="RDL রেন্ট এ কার">RDL Rent A Car</option>
                     </select>
                 </div>
                 </div>
