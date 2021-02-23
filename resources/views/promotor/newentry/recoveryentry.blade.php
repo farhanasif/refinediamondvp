@@ -413,7 +413,8 @@
                     var loss = i - r;
                     var inactive = i+loss;
                     $('#loss').val(loss);
-                    $('#inactive').val(inactive);
+                    //$('#inactive').val(inactive);
+                    $('#inactive').val(loss);
                 }
             }
         }

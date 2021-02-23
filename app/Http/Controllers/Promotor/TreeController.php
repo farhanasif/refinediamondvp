@@ -21,484 +21,568 @@ class TreeController extends Controller
     //PROMOTER TREE PAGE
     public function index($id = 0, $bc = 1){
         $auth_id = Auth::user()->id;
-        //dd($auth_id); exit();
-        $node_1_user_id = 0;
-        $node_1_bc = 0;
-        $node_1_mobile = 0;
-        $node_1_name = '';
-        $node_1_package = '';
+        $valid = 0;
 
-        $node_11_user_id = 0;
-        $node_11_bc = 0;
-        $node_11_mobile = 0;
-        $node_11_name = '';
-        $node_11_package = '';
-
-        $node_111_user_id = 0;
-        $node_111_bc = 0;
-        $node_111_mobile = 0;
-        $node_111_name = '';
-        $node_111_package = '';
-
-        $node_112_user_id = 0;
-        $node_112_bc = 0;
-        $node_112_mobile = 0;
-        $node_112_name = '';
-        $node_112_package = '';
-
-        $node_1111_user_id = 0;
-        $node_1111_bc = 0;
-        $node_1111_mobile = 0;
-        $node_1111_name = '';
-        $node_1111_package = '';
-
-        $node_1112_user_id = 0;
-        $node_1112_bc = 0;
-        $node_1112_mobile = 0;
-        $node_1112_name = '';
-        $node_1112_package = '';
-
-        $node_1121_user_id = 0;
-        $node_1121_bc = 0;
-        $node_1121_mobile = 0;
-        $node_1121_name = '';
-        $node_1121_package = '';
-
-        $node_1122_user_id = 0;
-        $node_1122_bc = 0;
-        $node_1122_mobile = 0;
-        $node_1122_name = '';
-        $node_1122_package = '';
-
-        $node_12_user_id = 0;
-        $node_12_bc = 0;
-        $node_12_mobile = 0;
-        $node_12_name = '';
-        $node_12_package = '';
-
-        $node_121_user_id = 0;
-        $node_121_bc = 0;
-        $node_121_mobile = 0;
-        $node_121_name = '';
-        $node_121_package = '';
-
-        $node_122_user_id = 0;
-        $node_122_bc = 0;
-        $node_122_mobile = 0;
-        $node_122_name = '';
-        $node_122_package = '';
-
-        $node_1211_user_id = 0;
-        $node_1211_bc = 0;
-        $node_1211_mobile = 0;
-        $node_1211_name = '';
-        $node_1211_package = '';
-
-        $node_1212_user_id = 0;
-        $node_1212_bc = 0;
-        $node_1212_mobile = 0;
-        $node_1212_name = '';
-        $node_1212_package = '';
-
-        $node_1221_user_id = 0;
-        $node_1221_bc = 0;
-        $node_1221_mobile = 0;
-        $node_1221_name = '';
-        $node_1221_package = '';
-
-        $node_1222_user_id = 0;
-        $node_1222_bc = 0;
-        $node_1222_mobile = 0;
-        $node_1222_name = '';
-        $node_1222_package = '';
-
-        if(!isset($id) || $id < 1){
-            $id = $auth_id;
-        }
-
-        //echo $id; exit();
-
-
-        if($id){
-            //return $id;
-            //$id = 1;
-            //get left right of root
-
-            ////// need to check if ID exists/////////
-
-            // $root = SponsorTree::where('user_id', $id)
-            //     ->where('bc', 1)
-            //     ->first();
-            DB::connection()->enableQueryLog();
-
-            $root = DB::table('sponsor_tree as st')
-                ->join('users as u', 'u.id','=', 'st.user_id')
-                ->select('st.*','u.*')
-                ->where('st.user_id', $id)
-                ->where('st.bc', $bc)
-                ->first();
-
-            $queries = DB::getQueryLog();
-
-            //dd($queries); exit();
-
-            $node_1_user_id = $root->user_id;
-            $node_1_bc = $root->bc;
-            $node_1_mobile = $root->mobile;
-            $node_1_name = $root->name;
-            $node_1_package = $root->package;
-
-
-            //dd($root);
-            //check if root has left and right, node 1
-            $tree_left = $root->left;
-            $tree_right = $root->right;
-            //dd($tree_right);exit();
-
-            if($tree_left == 0){
-            }
-            else{
-                //get left tree details
-                $root_left = $this->getTreeDetails($tree_left);
-                $node_11_user_id = $root_left->user_id;
-                $node_11_bc = $root_left->bc;
-                $node_11_mobile = $root_left->mobile;
-                $node_11_name = $root_left->name;
-                $node_11_package = $root_left->package;
-
-                //dd($root_left);
-                $tree_11_left = $root_left->left;
-                $tree_11_right = $root_left->right;
-                //dd($tree_11_right);
-
-                //left level 3 checking
-                if($tree_11_left == 0){}
-                else{
-                    //get left tree details
-                    $root_left = $this->getTreeDetails($tree_11_left);
-
-                    $node_111_user_id = $root_left->user_id;
-                    $node_111_bc = $root_left->bc;
-                    $node_111_mobile = $root_left->mobile;
-                    $node_111_name = $root_left->name;
-                    $node_111_package = $root_left->package;
-
-                    $tree_111_left = $root_left->left;
-                    $tree_111_right = $root_left->right;
-
-                    if($tree_111_left == 0){}
-                    else{
-                        //get left tree details
-                        $root_left = $this->getTreeDetails($tree_111_left);
-                        $node_1111_user_id = $root_left->user_id;
-                        $node_1111_bc = $root_left->bc;
-                        $node_1111_mobile = $root_left->mobile;
-                        $node_1111_name = $root_left->name;
-                        $node_1111_package = $root_left->package;
-                    }
-
-                    if($tree_111_right == 0){}
-                    else{
-                        //get left tree details
-                        $root_left = $this->getTreeDetails($tree_111_right);
-                        $node_1112_user_id = $root_left->user_id;
-                        $node_1112_bc = $root_left->bc;
-                        $node_1112_mobile = $root_left->mobile;
-                        $node_1112_name = $root_left->name;
-                        $node_1112_package = $root_left->package;
-                    }
-                }
-
-                if($tree_11_right == 0){}
-                else{
-                    //get left tree details
-                    $root_right = $this->getTreeDetails($tree_11_right);
-                    $node_112_user_id = $root_right->user_id;
-                    $node_112_bc = $root_right->bc;
-                    $node_112_mobile = $root_right->mobile;
-                    $node_112_name = $root_right->name;
-                    $node_112_package = $root_right->package;
-                    //dd($root_right);
-
-                    $tree_112_left = $root_right->left;
-                    $tree_112_right = $root_right->right;
-
-                    if($tree_112_left == 0){}
-                    else{
-                        //get left tree details
-                        $root_left = $this->getTreeDetails($tree_112_left);
-                        $node_1121_user_id = $root_left->user_id;
-                        $node_1121_bc = $root_left->bc;
-                        $node_1121_mobile = $root_left->mobile;
-                        $node_1121_name = $root_left->name;
-                        $node_1121_package = $root_left->package;
-                    }
-
-                    if($tree_112_right == 0){}
-                    else{
-                        //get left tree details
-                        $root_left = $this->getTreeDetails($tree_112_right);
-                        //dd($root_left);exit();
-                        $node_1122_user_id = $root_left->user_id;
-                        $node_1122_bc = $root_left->bc;
-                        $node_1122_mobile = $root_left->mobile;
-                        $node_1122_name = $root_left->name;
-                        $node_1122_package = $root_left->package;
-                    }
-
-                }
-            }
-
-            if($tree_right == 0){}
-            else{
-                //get left tree details
-                //dd($tree_right);exit();
-                $root_right = $this->getTreeDetails($tree_right);
-                $node_12_user_id = $root_right->user_id;
-                $node_12_bc = $root_right->bc;
-                $node_12_mobile = $root_right->mobile;
-                $node_12_name = $root_right->name;
-                $node_12_package = $root_right->package;
-                //dd($root_right);
-                $tree_12_left = $root_right->left;
-                $tree_12_right = $root_right->right;
-
-                //left level 3 checking
-                if($tree_12_left == 0){}
-                else{
-                    //get left tree details
-                    $root_left = $this->getTreeDetails($tree_12_left);
-
-                    $node_121_user_id = $root_left->user_id;
-                    $node_121_bc = $root_left->bc;
-                    $node_121_mobile = $root_left->mobile;
-                    $node_121_name = $root_left->name;
-                    $node_121_package = $root_left->package;
-
-                    $tree_121_left = $root_left->left;
-                    $tree_121_right = $root_left->right;
-
-                    if($tree_121_left == 0){}
-                    else{
-                        //get left tree details
-                        $root_left = $this->getTreeDetails($tree_121_left);
-                        $node_1211_user_id = $root_left->user_id;
-                        $node_1211_bc = $root_left->bc;
-                        $node_1211_mobile = $root_left->mobile;
-                        $node_1211_name = $root_left->name;
-                        $node_1211_package = $root_left->package;
-                    }
-
-                    if($tree_121_right == 0){}
-                    else{
-                        //get left tree details
-                        $root_left = $this->getTreeDetails($tree_121_right);
-                        $node_1212_user_id = $root_left->user_id;
-                        $node_1212_bc = $root_left->bc;
-                        $node_1212_mobile = $root_left->mobile;
-                        $node_1212_name = $root_left->name;
-                        $node_1212_package = $root_left->package;
-                    }
-                }
-
-                if($tree_12_right == 0){}
-                else{
-                    //get left tree details
-                    $root_right = $this->getTreeDetails($tree_12_right);
-                    $node_122_user_id = $root_right->user_id;
-                    $node_122_bc = $root_right->bc;
-                    $node_122_mobile = $root_right->mobile;
-                    $node_122_name = $root_right->name;
-                    $node_122_package = $root_right->package;
-                    //dd($root_right);
-
-                    $tree_122_left = $root_right->left;
-                    $tree_122_right = $root_right->right;
-
-                    if($tree_122_left == 0){}
-                    else{
-                        //get left tree details
-                        $root_left = $this->getTreeDetails($tree_122_left);
-                        $node_1221_user_id = $root_left->user_id;
-                        $node_1221_bc = $root_left->bc;
-                        $node_1221_mobile = $root_left->mobile;
-                        $node_1221_name = $root_left->name;
-                        $node_1221_package = $root_left->package;
-                    }
-
-                    if($tree_122_right == 0){}
-                    else{
-                        //get left tree details
-                        $root_left = $this->getTreeDetails($tree_122_right);
-                        $node_1222_user_id = $root_left->user_id;
-                        $node_1222_bc = $root_left->bc;
-                        $node_1222_mobile = $root_left->mobile;
-                        $node_1222_name = $root_left->name;
-                        $node_1222_package = $root_left->package;
-                    }
-
-                }
-            }
+        if($auth_id == 4){
+            $valid = 0;
         }
         else{
-            //return view('promotor.tree');
+            if(!isset($id) || $id < 1){
+                $id = $auth_id;
+            }
+
+            $user = DB::select('select * from users where id='.$id);
+            //dd($user);exit();
+            if($user){
+                $query = "select st.id, u.name, st.parent, st.left, st.right from users u inner join sponsor_tree st on u.id = st.user_id and u.mobile = '".$user[0]->mobile."' where st.bc='".$bc."' limit 1";
+                $place_check = DB::select($query);
+                //dd($place_check); exit();
+                if($place_check){
+                    //check if upper line
+                    $topline = DB::select("
+                        SELECT T2.id, T2.parent, T2.user_id, T2.bc, u.mobile
+                            FROM (
+                                SELECT
+                                    @r AS _id,
+                                    (SELECT @r := parent FROM sponsor_tree WHERE id = _id) AS parent,
+                                    @l := @l + 1 AS lvl
+                                FROM
+                                    (SELECT @r := ".$place_check[0]->id.", @l := 0) vars,
+                                    sponsor_tree h
+                                WHERE @r <> 0) T1
+                            JOIN sponsor_tree T2
+                            ON T1._id = T2.id
+                            join users u
+                            on u.id = T2.user_id
+                            ORDER BY T1.lvl desc");
+                    //dd($topline);exit();
+                    if($topline){
+                        $length = count($topline);
+                        $auth_sp_id = 0;
+                        $search_id = 0;
+                        $top_net = 0; //valid
+                        for($i = 0; $i < $length; $i++){
+                            //check if sponsor matched or not
+                            if($topline[$i]->user_id == $auth_id){
+                                $auth_sp_id = $topline[$i]->id;
+                            }
+
+                            if(!isset($id) || $id < 1){
+                                $id = $auth_id;
+                            }
+                            //check if own bc 1 matched ot not
+                            if($topline[$i]->user_id == $user[0]->id){
+                                $search_id = $topline[$i]->id;
+                            }
+                        }
+
+                        //echo $search_id.'  '.$auth_sp_id; exit();
+                        if($auth_sp_id == 0){
+                            $valid = 1;
+                        }
+                        if($search_id < $auth_sp_id){
+                            $valid = 1;
+                        }
+                    }
+
+
+                }
+                else{
+                    $valid = 1;
+                }
+            }
+            else{
+                $valid = 1;
+            }
+
         }
 
-        // $response = [
-        //     'node_1_user_id' => $node_1_user_id,
-        //     'node_1_bc' => $node_1_bc,
-        //     'node_1_mobile' => $node_1_mobile,
+        if($valid == 0){
 
-        //     'node_11_user_id' => $node_11_user_id,
-        //     'node_11_bc' => $node_11_bc,
-        //     'node_11_mobile' => $node_11_mobile,
 
-        //     'node_111_user_id' => $node_111_user_id,
-        //     'node_111_bc' => $node_111_bc,
-        //     'node_111_mobile' => $node_111_mobile,
+            //dd($auth_id); exit();
+            $node_1_user_id = 0;
+            $node_1_bc = 0;
+            $node_1_mobile = 0;
+            $node_1_name = '';
+            $node_1_package = '';
 
-        //     'node_112_user_id' => $node_112_user_id,
-        //     'node_112_bc' => $node_112_bc,
-        //     'node_112_mobile' => $node_112_mobile,
+            $node_11_user_id = 0;
+            $node_11_bc = 0;
+            $node_11_mobile = 0;
+            $node_11_name = '';
+            $node_11_package = '';
 
-        //     'node_1111_user_id' => $node_1111_user_id,
-        //     'node_1111_bc' => $node_1111_bc,
-        //     'node_1111_mobile' => $node_1111_mobile,
+            $node_111_user_id = 0;
+            $node_111_bc = 0;
+            $node_111_mobile = 0;
+            $node_111_name = '';
+            $node_111_package = '';
 
-        //     'node_1112_user_id' => $node_1112_user_id,
-        //     'node_1112_bc' => $node_1112_bc,
-        //     'node_1112_mobile' => $node_1112_mobile,
+            $node_112_user_id = 0;
+            $node_112_bc = 0;
+            $node_112_mobile = 0;
+            $node_112_name = '';
+            $node_112_package = '';
 
-        //     'node_1121_user_id' => $node_1121_user_id,
-        //     'node_1121_bc' => $node_1121_bc,
-        //     'node_1121_mobile' => $node_1121_mobile,
+            $node_1111_user_id = 0;
+            $node_1111_bc = 0;
+            $node_1111_mobile = 0;
+            $node_1111_name = '';
+            $node_1111_package = '';
 
-        //     'node_1122_user_id' => $node_1122_user_id,
-        //     'node_1122_bc' => $node_1122_bc,
-        //     'node_1122_mobile' => $node_1122_mobile,
+            $node_1112_user_id = 0;
+            $node_1112_bc = 0;
+            $node_1112_mobile = 0;
+            $node_1112_name = '';
+            $node_1112_package = '';
 
-        //     'node_12_user_id' => $node_12_user_id,
-        //     'node_12_bc' => $node_12_bc,
-        //     'node_12_mobile' => $node_12_mobile,
+            $node_1121_user_id = 0;
+            $node_1121_bc = 0;
+            $node_1121_mobile = 0;
+            $node_1121_name = '';
+            $node_1121_package = '';
 
-        //     'node_121_user_id' => $node_121_user_id,
-        //     'node_121_bc' => $node_121_bc,
-        //     'node_121_mobile' => $node_121_mobile,
+            $node_1122_user_id = 0;
+            $node_1122_bc = 0;
+            $node_1122_mobile = 0;
+            $node_1122_name = '';
+            $node_1122_package = '';
 
-        //     'node_122_user_id' => $node_122_user_id,
-        //     'node_122_bc' => $node_122_bc,
-        //     'node_122_mobile' => $node_122_mobile,
+            $node_12_user_id = 0;
+            $node_12_bc = 0;
+            $node_12_mobile = 0;
+            $node_12_name = '';
+            $node_12_package = '';
 
-        //     'node_1211_user_id' => $node_1211_user_id,
-        //     'node_1211_bc' => $node_1211_bc,
-        //     'node_1211_mobile' => $node_1211_mobile,
+            $node_121_user_id = 0;
+            $node_121_bc = 0;
+            $node_121_mobile = 0;
+            $node_121_name = '';
+            $node_121_package = '';
 
-        //     'node_1212_user_id' => $node_1212_user_id,
-        //     'node_1212_bc' => $node_1212_bc,
-        //     'node_1212_mobile' => $node_1212_mobile,
+            $node_122_user_id = 0;
+            $node_122_bc = 0;
+            $node_122_mobile = 0;
+            $node_122_name = '';
+            $node_122_package = '';
 
-        //     'node_1221_user_id' => $node_1221_user_id,
-        //     'node_1221_bc' => $node_1221_bc,
-        //     'node_1221_mobile' => $node_1221_mobile,
+            $node_1211_user_id = 0;
+            $node_1211_bc = 0;
+            $node_1211_mobile = 0;
+            $node_1211_name = '';
+            $node_1211_package = '';
 
-        //     'node_1222_user_id' => $node_1222_user_id,
-        //     'node_1222_bc' => $node_1222_bc,
-        //     'node_1222_mobile' => $node_1222_mobile
-        // ];
+            $node_1212_user_id = 0;
+            $node_1212_bc = 0;
+            $node_1212_mobile = 0;
+            $node_1212_name = '';
+            $node_1212_package = '';
 
-        //dd($response);exit();
+            $node_1221_user_id = 0;
+            $node_1221_bc = 0;
+            $node_1221_mobile = 0;
+            $node_1221_name = '';
+            $node_1221_package = '';
 
-        return view('promotor.tree', [
-            'node_1_user_id' => $node_1_user_id,
-            'node_1_bc' => $node_1_bc,
-            'node_1_mobile' => $node_1_mobile,
-            'node_1_name' => $node_1_name,
-            'node_1_package' => $node_1_package,
+            $node_1222_user_id = 0;
+            $node_1222_bc = 0;
+            $node_1222_mobile = 0;
+            $node_1222_name = '';
+            $node_1222_package = '';
 
-            'node_11_user_id' => $node_11_user_id,
-            'node_11_bc' => $node_11_bc,
-            'node_11_mobile' => $node_11_mobile,
-            'node_11_name' => $node_11_name,
-            'node_11_package' => $node_11_package,
+            if(!isset($id) || $id < 1){
+                $id = $auth_id;
+            }
 
-            'node_111_user_id' => $node_111_user_id,
-            'node_111_bc' => $node_111_bc,
-            'node_111_mobile' => $node_111_mobile,
-            'node_111_name' => $node_111_name,
-            'node_111_package' => $node_111_package,
+            //echo $id; exit();
 
-            'node_112_user_id' => $node_112_user_id,
-            'node_112_bc' => $node_112_bc,
-            'node_112_mobile' => $node_112_mobile,
-            'node_112_name' => $node_112_name,
-            'node_112_package' => $node_112_package,
 
-            'node_1111_user_id' => $node_1111_user_id,
-            'node_1111_bc' => $node_1111_bc,
-            'node_1111_mobile' => $node_1111_mobile,
-            'node_1111_name' => $node_1111_name,
-            'node_1111_package' => $node_1111_package,
+            if($id){
+                //return $id;
+                //$id = 1;
+                //get left right of root
 
-            'node_1112_user_id' => $node_1112_user_id,
-            'node_1112_bc' => $node_1112_bc,
-            'node_1112_mobile' => $node_1112_mobile,
-            'node_1112_name' => $node_1112_name,
-            'node_1112_package' => $node_1112_package,
+                ////// need to check if ID exists/////////
 
-            'node_1121_user_id' => $node_1121_user_id,
-            'node_1121_bc' => $node_1121_bc,
-            'node_1121_mobile' => $node_1121_mobile,
-            'node_1121_name' => $node_1121_name,
-            'node_1121_package' => $node_1121_package,
+                // $root = SponsorTree::where('user_id', $id)
+                //     ->where('bc', 1)
+                //     ->first();
+                DB::connection()->enableQueryLog();
 
-            'node_1122_user_id' => $node_1122_user_id,
-            'node_1122_bc' => $node_1122_bc,
-            'node_1122_mobile' => $node_1122_mobile,
-            'node_1122_name' => $node_1122_name,
-            'node_1122_package' => $node_1122_package,
+                $root = DB::table('sponsor_tree as st')
+                    ->join('users as u', 'u.id','=', 'st.user_id')
+                    ->select('st.*','u.*')
+                    ->where('st.user_id', $id)
+                    ->where('st.bc', $bc)
+                    ->first();
 
-            'node_12_user_id' => $node_12_user_id,
-            'node_12_bc' => $node_12_bc,
-            'node_12_mobile' => $node_12_mobile,
-            'node_12_name' => $node_12_name,
-            'node_12_package' => $node_12_package,
+                $queries = DB::getQueryLog();
 
-            'node_121_user_id' => $node_121_user_id,
-            'node_121_bc' => $node_121_bc,
-            'node_121_mobile' => $node_121_mobile,
-            'node_121_name' => $node_121_name,
-            'node_121_package' => $node_121_package,
+                //dd($queries); exit();
 
-            'node_122_user_id' => $node_122_user_id,
-            'node_122_bc' => $node_122_bc,
-            'node_122_mobile' => $node_122_mobile,
-            'node_122_name' => $node_122_name,
-            'node_122_package' => $node_122_package,
+                $node_1_user_id = $root->user_id;
+                $node_1_bc = $root->bc;
+                $node_1_mobile = $root->mobile;
+                $node_1_name = $root->name;
+                $node_1_package = $root->package;
 
-            'node_1211_user_id' => $node_1211_user_id,
-            'node_1211_bc' => $node_1211_bc,
-            'node_1211_mobile' => $node_1211_mobile,
-            'node_1211_name' => $node_1211_name,
-            'node_1211_package' => $node_1211_package,
 
-            'node_1212_user_id' => $node_1212_user_id,
-            'node_1212_bc' => $node_1212_bc,
-            'node_1212_mobile' => $node_1212_mobile,
-            'node_1212_name' => $node_1212_name,
-            'node_1212_package' => $node_1212_package,
+                //dd($root);
+                //check if root has left and right, node 1
+                $tree_left = $root->left;
+                $tree_right = $root->right;
+                //dd($tree_right);exit();
 
-            'node_1221_user_id' => $node_1221_user_id,
-            'node_1221_bc' => $node_1221_bc,
-            'node_1221_mobile' => $node_1221_mobile,
-            'node_1221_name' => $node_1221_name,
-            'node_1221_package' => $node_1221_package,
+                if($tree_left == 0){
+                }
+                else{
+                    //get left tree details
+                    $root_left = $this->getTreeDetails($tree_left);
+                    $node_11_user_id = $root_left->user_id;
+                    $node_11_bc = $root_left->bc;
+                    $node_11_mobile = $root_left->mobile;
+                    $node_11_name = $root_left->name;
+                    $node_11_package = $root_left->package;
 
-            'node_1222_user_id' => $node_1222_user_id,
-            'node_1222_bc' => $node_1222_bc,
-            'node_1222_mobile' => $node_1222_mobile,
-            'node_1222_name' => $node_1222_name,
-            'node_1222_package' => $node_1222_package,
-        ]);
+                    //dd($root_left);
+                    $tree_11_left = $root_left->left;
+                    $tree_11_right = $root_left->right;
+                    //dd($tree_11_right);
+
+                    //left level 3 checking
+                    if($tree_11_left == 0){}
+                    else{
+                        //get left tree details
+                        $root_left = $this->getTreeDetails($tree_11_left);
+
+                        $node_111_user_id = $root_left->user_id;
+                        $node_111_bc = $root_left->bc;
+                        $node_111_mobile = $root_left->mobile;
+                        $node_111_name = $root_left->name;
+                        $node_111_package = $root_left->package;
+
+                        $tree_111_left = $root_left->left;
+                        $tree_111_right = $root_left->right;
+
+                        if($tree_111_left == 0){}
+                        else{
+                            //get left tree details
+                            $root_left = $this->getTreeDetails($tree_111_left);
+                            $node_1111_user_id = $root_left->user_id;
+                            $node_1111_bc = $root_left->bc;
+                            $node_1111_mobile = $root_left->mobile;
+                            $node_1111_name = $root_left->name;
+                            $node_1111_package = $root_left->package;
+                        }
+
+                        if($tree_111_right == 0){}
+                        else{
+                            //get left tree details
+                            $root_left = $this->getTreeDetails($tree_111_right);
+                            $node_1112_user_id = $root_left->user_id;
+                            $node_1112_bc = $root_left->bc;
+                            $node_1112_mobile = $root_left->mobile;
+                            $node_1112_name = $root_left->name;
+                            $node_1112_package = $root_left->package;
+                        }
+                    }
+
+                    if($tree_11_right == 0){}
+                    else{
+                        //get left tree details
+                        $root_right = $this->getTreeDetails($tree_11_right);
+                        $node_112_user_id = $root_right->user_id;
+                        $node_112_bc = $root_right->bc;
+                        $node_112_mobile = $root_right->mobile;
+                        $node_112_name = $root_right->name;
+                        $node_112_package = $root_right->package;
+                        //dd($root_right);
+
+                        $tree_112_left = $root_right->left;
+                        $tree_112_right = $root_right->right;
+
+                        if($tree_112_left == 0){}
+                        else{
+                            //get left tree details
+                            $root_left = $this->getTreeDetails($tree_112_left);
+                            $node_1121_user_id = $root_left->user_id;
+                            $node_1121_bc = $root_left->bc;
+                            $node_1121_mobile = $root_left->mobile;
+                            $node_1121_name = $root_left->name;
+                            $node_1121_package = $root_left->package;
+                        }
+
+                        if($tree_112_right == 0){}
+                        else{
+                            //get left tree details
+                            $root_left = $this->getTreeDetails($tree_112_right);
+                            //dd($root_left);exit();
+                            $node_1122_user_id = $root_left->user_id;
+                            $node_1122_bc = $root_left->bc;
+                            $node_1122_mobile = $root_left->mobile;
+                            $node_1122_name = $root_left->name;
+                            $node_1122_package = $root_left->package;
+                        }
+
+                    }
+                }
+
+                if($tree_right == 0){}
+                else{
+                    //get left tree details
+                    //dd($tree_right);exit();
+                    $root_right = $this->getTreeDetails($tree_right);
+                    $node_12_user_id = $root_right->user_id;
+                    $node_12_bc = $root_right->bc;
+                    $node_12_mobile = $root_right->mobile;
+                    $node_12_name = $root_right->name;
+                    $node_12_package = $root_right->package;
+                    //dd($root_right);
+                    $tree_12_left = $root_right->left;
+                    $tree_12_right = $root_right->right;
+
+                    //left level 3 checking
+                    if($tree_12_left == 0){}
+                    else{
+                        //get left tree details
+                        $root_left = $this->getTreeDetails($tree_12_left);
+
+                        $node_121_user_id = $root_left->user_id;
+                        $node_121_bc = $root_left->bc;
+                        $node_121_mobile = $root_left->mobile;
+                        $node_121_name = $root_left->name;
+                        $node_121_package = $root_left->package;
+
+                        $tree_121_left = $root_left->left;
+                        $tree_121_right = $root_left->right;
+
+                        if($tree_121_left == 0){}
+                        else{
+                            //get left tree details
+                            $root_left = $this->getTreeDetails($tree_121_left);
+                            $node_1211_user_id = $root_left->user_id;
+                            $node_1211_bc = $root_left->bc;
+                            $node_1211_mobile = $root_left->mobile;
+                            $node_1211_name = $root_left->name;
+                            $node_1211_package = $root_left->package;
+                        }
+
+                        if($tree_121_right == 0){}
+                        else{
+                            //get left tree details
+                            $root_left = $this->getTreeDetails($tree_121_right);
+                            $node_1212_user_id = $root_left->user_id;
+                            $node_1212_bc = $root_left->bc;
+                            $node_1212_mobile = $root_left->mobile;
+                            $node_1212_name = $root_left->name;
+                            $node_1212_package = $root_left->package;
+                        }
+                    }
+
+                    if($tree_12_right == 0){}
+                    else{
+                        //get left tree details
+                        $root_right = $this->getTreeDetails($tree_12_right);
+                        $node_122_user_id = $root_right->user_id;
+                        $node_122_bc = $root_right->bc;
+                        $node_122_mobile = $root_right->mobile;
+                        $node_122_name = $root_right->name;
+                        $node_122_package = $root_right->package;
+                        //dd($root_right);
+
+                        $tree_122_left = $root_right->left;
+                        $tree_122_right = $root_right->right;
+
+                        if($tree_122_left == 0){}
+                        else{
+                            //get left tree details
+                            $root_left = $this->getTreeDetails($tree_122_left);
+                            $node_1221_user_id = $root_left->user_id;
+                            $node_1221_bc = $root_left->bc;
+                            $node_1221_mobile = $root_left->mobile;
+                            $node_1221_name = $root_left->name;
+                            $node_1221_package = $root_left->package;
+                        }
+
+                        if($tree_122_right == 0){}
+                        else{
+                            //get left tree details
+                            $root_left = $this->getTreeDetails($tree_122_right);
+                            $node_1222_user_id = $root_left->user_id;
+                            $node_1222_bc = $root_left->bc;
+                            $node_1222_mobile = $root_left->mobile;
+                            $node_1222_name = $root_left->name;
+                            $node_1222_package = $root_left->package;
+                        }
+
+                    }
+                }
+            }
+            else{
+                //return view('promotor.tree');
+            }
+
+            // $response = [
+            //     'node_1_user_id' => $node_1_user_id,
+            //     'node_1_bc' => $node_1_bc,
+            //     'node_1_mobile' => $node_1_mobile,
+
+            //     'node_11_user_id' => $node_11_user_id,
+            //     'node_11_bc' => $node_11_bc,
+            //     'node_11_mobile' => $node_11_mobile,
+
+            //     'node_111_user_id' => $node_111_user_id,
+            //     'node_111_bc' => $node_111_bc,
+            //     'node_111_mobile' => $node_111_mobile,
+
+            //     'node_112_user_id' => $node_112_user_id,
+            //     'node_112_bc' => $node_112_bc,
+            //     'node_112_mobile' => $node_112_mobile,
+
+            //     'node_1111_user_id' => $node_1111_user_id,
+            //     'node_1111_bc' => $node_1111_bc,
+            //     'node_1111_mobile' => $node_1111_mobile,
+
+            //     'node_1112_user_id' => $node_1112_user_id,
+            //     'node_1112_bc' => $node_1112_bc,
+            //     'node_1112_mobile' => $node_1112_mobile,
+
+            //     'node_1121_user_id' => $node_1121_user_id,
+            //     'node_1121_bc' => $node_1121_bc,
+            //     'node_1121_mobile' => $node_1121_mobile,
+
+            //     'node_1122_user_id' => $node_1122_user_id,
+            //     'node_1122_bc' => $node_1122_bc,
+            //     'node_1122_mobile' => $node_1122_mobile,
+
+            //     'node_12_user_id' => $node_12_user_id,
+            //     'node_12_bc' => $node_12_bc,
+            //     'node_12_mobile' => $node_12_mobile,
+
+            //     'node_121_user_id' => $node_121_user_id,
+            //     'node_121_bc' => $node_121_bc,
+            //     'node_121_mobile' => $node_121_mobile,
+
+            //     'node_122_user_id' => $node_122_user_id,
+            //     'node_122_bc' => $node_122_bc,
+            //     'node_122_mobile' => $node_122_mobile,
+
+            //     'node_1211_user_id' => $node_1211_user_id,
+            //     'node_1211_bc' => $node_1211_bc,
+            //     'node_1211_mobile' => $node_1211_mobile,
+
+            //     'node_1212_user_id' => $node_1212_user_id,
+            //     'node_1212_bc' => $node_1212_bc,
+            //     'node_1212_mobile' => $node_1212_mobile,
+
+            //     'node_1221_user_id' => $node_1221_user_id,
+            //     'node_1221_bc' => $node_1221_bc,
+            //     'node_1221_mobile' => $node_1221_mobile,
+
+            //     'node_1222_user_id' => $node_1222_user_id,
+            //     'node_1222_bc' => $node_1222_bc,
+            //     'node_1222_mobile' => $node_1222_mobile
+            // ];
+
+            //dd($response);exit();
+
+            return view('promotor.tree', [
+                'node_1_user_id' => $node_1_user_id,
+                'node_1_bc' => $node_1_bc,
+                'node_1_mobile' => $node_1_mobile,
+                'node_1_name' => $node_1_name,
+                'node_1_package' => $node_1_package,
+
+                'node_11_user_id' => $node_11_user_id,
+                'node_11_bc' => $node_11_bc,
+                'node_11_mobile' => $node_11_mobile,
+                'node_11_name' => $node_11_name,
+                'node_11_package' => $node_11_package,
+
+                'node_111_user_id' => $node_111_user_id,
+                'node_111_bc' => $node_111_bc,
+                'node_111_mobile' => $node_111_mobile,
+                'node_111_name' => $node_111_name,
+                'node_111_package' => $node_111_package,
+
+                'node_112_user_id' => $node_112_user_id,
+                'node_112_bc' => $node_112_bc,
+                'node_112_mobile' => $node_112_mobile,
+                'node_112_name' => $node_112_name,
+                'node_112_package' => $node_112_package,
+
+                'node_1111_user_id' => $node_1111_user_id,
+                'node_1111_bc' => $node_1111_bc,
+                'node_1111_mobile' => $node_1111_mobile,
+                'node_1111_name' => $node_1111_name,
+                'node_1111_package' => $node_1111_package,
+
+                'node_1112_user_id' => $node_1112_user_id,
+                'node_1112_bc' => $node_1112_bc,
+                'node_1112_mobile' => $node_1112_mobile,
+                'node_1112_name' => $node_1112_name,
+                'node_1112_package' => $node_1112_package,
+
+                'node_1121_user_id' => $node_1121_user_id,
+                'node_1121_bc' => $node_1121_bc,
+                'node_1121_mobile' => $node_1121_mobile,
+                'node_1121_name' => $node_1121_name,
+                'node_1121_package' => $node_1121_package,
+
+                'node_1122_user_id' => $node_1122_user_id,
+                'node_1122_bc' => $node_1122_bc,
+                'node_1122_mobile' => $node_1122_mobile,
+                'node_1122_name' => $node_1122_name,
+                'node_1122_package' => $node_1122_package,
+
+                'node_12_user_id' => $node_12_user_id,
+                'node_12_bc' => $node_12_bc,
+                'node_12_mobile' => $node_12_mobile,
+                'node_12_name' => $node_12_name,
+                'node_12_package' => $node_12_package,
+
+                'node_121_user_id' => $node_121_user_id,
+                'node_121_bc' => $node_121_bc,
+                'node_121_mobile' => $node_121_mobile,
+                'node_121_name' => $node_121_name,
+                'node_121_package' => $node_121_package,
+
+                'node_122_user_id' => $node_122_user_id,
+                'node_122_bc' => $node_122_bc,
+                'node_122_mobile' => $node_122_mobile,
+                'node_122_name' => $node_122_name,
+                'node_122_package' => $node_122_package,
+
+                'node_1211_user_id' => $node_1211_user_id,
+                'node_1211_bc' => $node_1211_bc,
+                'node_1211_mobile' => $node_1211_mobile,
+                'node_1211_name' => $node_1211_name,
+                'node_1211_package' => $node_1211_package,
+
+                'node_1212_user_id' => $node_1212_user_id,
+                'node_1212_bc' => $node_1212_bc,
+                'node_1212_mobile' => $node_1212_mobile,
+                'node_1212_name' => $node_1212_name,
+                'node_1212_package' => $node_1212_package,
+
+                'node_1221_user_id' => $node_1221_user_id,
+                'node_1221_bc' => $node_1221_bc,
+                'node_1221_mobile' => $node_1221_mobile,
+                'node_1221_name' => $node_1221_name,
+                'node_1221_package' => $node_1221_package,
+
+                'node_1222_user_id' => $node_1222_user_id,
+                'node_1222_bc' => $node_1222_bc,
+                'node_1222_mobile' => $node_1222_mobile,
+                'node_1222_name' => $node_1222_name,
+                'node_1222_package' => $node_1222_package,
+            ]);
+
+        }
+        else{
+            return redirect()->route('promotor.tree');
+        }
 
     }
 

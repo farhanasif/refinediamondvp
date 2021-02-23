@@ -356,7 +356,9 @@
 @section('custom_js')
 <script>
     console.log('here');
-    var base_url = 'http://localhost/refinediamondvp/public/index.php/';
+    //var base_url = 'http://localhost/refinediamondvp/public/index.php/';
+    var base_url = "{{URL::to('/')}}";
+    base_url = base_url+'/';
     function getTooltip(id,bc){
         console.log('got id and bc ', id, bc);
         //get data from server
