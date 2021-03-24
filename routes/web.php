@@ -106,10 +106,26 @@ Route::post('/promotor/savedemandresponse', 'Promotor\InvestmentController@saved
 Route::get('/promotor/investmentreport','Promotor\InvestmentController@investmentreport')->name('promotor.investmentreport');
 
 
+/////----------Promoter Purchase Amount -----/////////
+Route::get('/promotor/purchase','Promotor\InvestmentController@purhcaseamount')->name('promotor.purhcaseamount');
+Route::get('/promotor/purhcaseamountrequest','Promotor\InvestmentController@purhcaseamountrequest')->name('promotor.purhcaseamountrequest');
+Route::post('/promotor/savepurchaseamountrequest', 'Promotor\InvestmentController@savepurchaseamountrequest')->name('promotor.savepurchaseamountrequest');
+Route::get('/promotor/viewallpurchase','Promotor\InvestmentController@viewallpurchase')->name('promotor.viewallpurchase');
+
+
+
+
+
+
+
+
+
+
 //Product Purchase
 Route::get('/product/purchase','Promotor\PurchaseController@productPurchase')->name('product.purchase');
 Route::get('/product/purchase/point/report','Promotor\PurchaseController@productPurchasePoint')->name('product.purchase.point.report');
 
+Route::get('/product/purchase/point/report','Promotor\PurchaseController@productPurchasePoint')->name('product.purchase.point.report');
 //Purchase Management
 Route::get('/add/purchase/amount','Promotor\purchaseManagementController@createPurchaseAmount')->name('purchase.amount');
 Route::get('/recieved/from/company','Promotor\purchaseManagementController@recievedFromCompany')->name('recieved.from.company');

@@ -358,4 +358,84 @@ class InvestmentController extends Controller
     }
 
 
+    public function purhcaseamount(){
+        $uid = Auth::user()->id;
+        $results = DB::select("select * from promoter_purchase_amounts where promoter_id=".$uid);
+        if($results){
+            return view('promotor.purchase.index', ['results' => $results]);
+        }
+        else{
+            //we need to create a purchase amount with this id
+            $id = DB::table('promoter_purchase_amounts')->insertGetId(
+                [
+                    'promoter_id' => $uid,
+                    'amount' => 0,
+                    'phone_number' => Auth::user()->mobile,
+                    'bc' => 1,
+                    'created_at' => Date('Y-m-d h:i:s'),
+                    'updated_at' => Date('Y-m-d h:i:s')
+                ]
+            );
+
+            $results = DB::select("select * from promoter_purchase_amounts where promoter_id=".$uid);
+            if($results){
+                return view('promotor.purchase.index', ['results' => $results]);
+            }
+            else{
+                return 'not found';
+            }
+
+        }
+    }
+
+    public function purhcaseamountrequest(){
+        return view('promotor.purchase.create');
+    }
+
+
+    public function savepurchaseamountrequest(Request $request){
+        $auth_id = Auth::user()->id;
+        $auth_mobile = Auth::user()->mobile;
+
+        //check user is valid or not
+        $auth_panel = DB::select("select * from rd_investment_panels where mobile='".$auth_mobile."'");
+        if(!$auth_panel){
+            return 'error,login mobile or bc not valid';
+        }
+
+        $mobile = $request->input('mobile');
+        $amount = $request->input('amount');
+        $ptype = $request->input('ptype');
+        $trxid = $request->input('trxid');
+
+        if($amount < 1){
+            return 'error,amount must be greater than 0';
+        }
+        else{
+            DB::table('promoter_purchase_amount_requests')->insertGetId(
+                [
+                    'promoter_id' => Auth::user()->id,
+                    'status' => 'Submitted',
+                    'amount' => $amount,
+                    'trxid' => $trxid,
+                    'created_at' => Date('Y-m-d h:i:s'),
+                    'updated_at' => Date('Y-m-d h:i:s'),
+                    'updated_by' => Auth::user()->id,
+                    'ptype' => $ptype,
+                    'phone_number' => Auth::user()->mobile
+                ]
+            );
+
+            return 'success, ok';
+        }
+    }
+
+
+    public function viewallpurchase(){
+        $results = DB::select('select * from promoter_purchase_amount_requests where promoter_id = '.Auth::user()->id.' order by id desc');
+        //dd($results);exit();
+        return view('promotor.purchase.view', ['results' => $results]);
+    }
+
+
 }

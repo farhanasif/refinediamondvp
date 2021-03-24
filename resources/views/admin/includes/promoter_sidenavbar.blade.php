@@ -317,6 +317,40 @@
                 </ul>
               </li>
 
+              <!-- Promoter Purchase Amount -->
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link active bg-warning">
+                 <i class="fas fa-hand-point-right"></i>
+                  <p>
+                     Purchase Amount
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{route('promotor.purhcaseamount')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>Purchase Amount</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="{{route('promotor.viewallpurchase')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>All Requests</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{route('promotor.purhcaseamountrequest')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon text-pink"></i>
+                      <p>Request Purchase Amount</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+              <!-- Promoter Purchase Amount -->
+
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                   <i class="fas fa-sort-amount-up"></i>
